@@ -33,8 +33,8 @@ int main(int argc, char** argv) {
                 printf("%02x ", uid[i]);
             }
 
-            if(0X4BEB0825 == *((uint32_t*)uid))
-            printf("You found the card\n");        
+            // if(0X4BEB0825 == *((uint32_t*)uid))
+            printf("%x", *((uint32_t*)uid));        
             
             printf("\r\n");
             break;
