@@ -32,6 +32,7 @@ int main(int argc, char** argv) {
             for (uint8_t i = 0; i < uid_len; i++) {
                 printf("%02x ", uid[i]);
             }
+            printf("\n%x ", 0X4BEB0825);        
             printf("\r\n");
             break;
         }
