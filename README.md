@@ -42,3 +42,9 @@ PN532_SPI_Init(&pn532);
 ```
 cd pn532-lib/example/raspberrypi/ && make
 ```
+
+## Start Game
+
+```
+/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes /path/to/ROM
+```
