@@ -10,7 +10,6 @@ int main(int argc, char** argv) {
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     uint8_t target_uid[MIFARE_UID_MAX_LENGTH] = {0X4B,0xEB,0x08,0x25};
     int32_t uid_len = 0;
-    printf("Hello!\r\n");
     PN532 pn532;
     
     PN532_SPI_Init(&pn532);
@@ -27,24 +26,12 @@ int main(int argc, char** argv) {
         // Check if a card is available to read
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len == PN532_STATUS_ERROR) {
-            printf(".");
             fflush(stdout);
-        } else {
-            printf("\r\n");
-            printf("Found card with UID: ");
-            
-            for (uint8_t i = 0; i < uid_len; i++) {
-                printf("%02x ", uid[i]);
-            }
-            printf("\r\n");
-            printf("                     ");
-            for (uint8_t i = 0; i < uid_len; i++) {
-                printf("%d  ", (uid[i]==target_uid[i]? 1:0));
-            }
-	        
+        } else {                        	        
             if(*((uint32_t*)target_uid) == *((uint32_t*)uid))
                 system("/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ nes /home/pi/RetroPie/roms/nes/turtle.nes");
-            printf("\r\n");                    
+            else
+                printf("Card Not Recognised\r\n\r\n");
             break;
         }
     }
