@@ -9,6 +9,6 @@ int main(void) {
     system("date +%A");
     system("gcc --version");
 
-    system("/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes /home/pi/RetroPie/roms/nes/turtle.nes")
+    system("/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes /home/pi/RetroPie/roms/nes/turtle.nes");
     
 }
