@@ -1,6 +1,6 @@
 CC = gcc
 DLIBS = -lwiringPi
-INC_DIR = ../../
+INC_DIR = ../
 SRCS = $(wildcard *.c)
 all: $(SRCS:.c=.exe)
 .PHONY: clean
