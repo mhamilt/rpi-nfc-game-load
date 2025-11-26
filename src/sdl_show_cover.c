@@ -170,7 +170,14 @@ int main() {
   SDL_FreeSurface(textSurf);
 
   SDL_Texture *currentTexture = textTextures[textureIndex];
-  SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
+
+  SDL_Rect textDest;
+  coverDest.x = 0;  // X position on screen
+  coverDest.y = 0; // Y position on screen
+  coverDest.w = 100;          // Width to draw
+  coverDest.h = 100;          // Height to draw
+
+  SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
 
   //---------------------------------------------------------------------------
   // Cover Art
@@ -275,7 +282,7 @@ int main() {
         textureIndex = (textureIndex == 1) ? 0 : 1;
         currentTexture = textTextures[textureIndex];
         SDL_SetTextureAlphaMod(currentTexture, 0);
-        SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
+        SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
         value_updated = 0;
         fade_state = FADE_IN;
         break;
@@ -283,7 +290,7 @@ int main() {
     }
 
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, currentTexture, NULL, &destRect);
+    SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
     SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
     SDL_RenderPresent(renderer);
   }
