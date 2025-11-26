@@ -86,10 +86,10 @@ int main() {
     return 1;
   }
 
-  if (pthread_create(&print_result_thread, NULL, print_result, NULL) != 0) {
-    printf("Thread creation failed\n");
-    return 1;
-  }
+//   if (pthread_create(&print_result_thread, NULL, print_result, NULL) != 0) {
+//     printf("Thread creation failed\n");
+//     return 1;
+//   }
 
   //---------------------------------------------------------------------------
   // SDL Setup
@@ -142,13 +142,14 @@ int main() {
       pthread_mutex_lock(&lock); // lock before accessing
       if (cardFound && prev_value != shared_value) {
 
-        sprintf(resultText, resultTextFormat, shared_value);
+        printf("card found\n\r");
+        // sprintf(resultText, resultTextFormat, shared_value);
         
-        SDL_DestroyTexture(texture);
-        SDL_Surface *surface = TTF_RenderText_Solid(font, resultText, color);
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
-        SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
+        // SDL_DestroyTexture(texture);
+        // SDL_Surface *surface = TTF_RenderText_Solid(font, resultText, color);
+        // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+        // SDL_FreeSurface(surface);
+        // SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
 
         prev_value = shared_value;
         cardFound = 0;
