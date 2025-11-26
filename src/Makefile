@@ -1,6 +1,6 @@
 CC = gcc
 DLIBS = -lwiringPi -lSDL2 -lSDL2_ttf
-INC_DIR = ../
+INC_DIR = ./pn532/
 SRCS = $(wildcard *.c)
 all: $(SRCS:.c=.exe)
 .PHONY: clean
