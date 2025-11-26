@@ -71,7 +71,7 @@ void *print_result(void *arg) {
 
 int main() {
   pthread_t poll_card_reader_thread;
-//   pthread_t print_result_thread;
+  pthread_t print_result_thread;
 
   // Initialize mutex
   if (pthread_mutex_init(&lock, NULL) != 0) {
@@ -86,10 +86,10 @@ int main() {
     return 1;
   }
 
-//   if (pthread_create(&print_result_thread, NULL, print_result, NULL) != 0) {
-//     printf("Thread creation failed\n");
-//     return 1;
-//   }
+  if (pthread_create(&print_result_thread, NULL, print_result, NULL) != 0) {
+    printf("Thread creation failed\n");
+    return 1;
+  }
 
   //---------------------------------------------------------------------------
   // SDL Setup
@@ -139,24 +139,24 @@ int main() {
         break;
       }
 
-      pthread_mutex_lock(&lock); // lock before accessing
-      if (cardFound && prev_value != shared_value) {
+    //   pthread_mutex_lock(&lock); // lock before accessing
+    //   if (cardFound && prev_value != shared_value) {
 
-        printf("Card found:\n\r");
-        sprintf(resultText, resultTextFormat, shared_value);
-        printf("%s",resultText);
-        // sprintf(resultText, resultTextFormat, shared_value);
+    //     printf("Card found:\n\r");
+    //     sprintf(resultText, resultTextFormat, shared_value);
+    //     printf("%s",resultText);
+    //     // sprintf(resultText, resultTextFormat, shared_value);
         
-        // SDL_DestroyTexture(texture);
-        // SDL_Surface *surface = TTF_RenderText_Solid(font, resultText, color);
-        // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-        // SDL_FreeSurface(surface);
-        // SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
+    //     // SDL_DestroyTexture(texture);
+    //     // SDL_Surface *surface = TTF_RenderText_Solid(font, resultText, color);
+    //     // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+    //     // SDL_FreeSurface(surface);
+    //     // SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
 
-        prev_value = shared_value;
-        cardFound = 0;
-      }
-      pthread_mutex_unlock(&lock); // unlock after accessing
+    //     prev_value = shared_value;
+    //     cardFound = 0;
+    //   }
+    //   pthread_mutex_unlock(&lock); // unlock after accessing
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -171,7 +171,7 @@ int main() {
 
   // Wait for the thread to finish
   pthread_join(poll_card_reader_thread, NULL);
-//   pthread_join(print_result_thread, NULL);
+  pthread_join(print_result_thread, NULL);
 
   pthread_mutex_destroy(&lock);
 
