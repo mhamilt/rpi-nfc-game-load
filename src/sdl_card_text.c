@@ -1,14 +1,13 @@
+#include "pn532.h"
+#include "pn532_rpi.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <stdio.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "pn532.h"
-#include "pn532_rpi.h"
 
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
@@ -42,7 +41,7 @@ void *poll_card_reader(void *arg) {
         PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
 
     if (uid_len != PN532_STATUS_ERROR) {
-      
+
       cardFound = 1;
       shared_value = *(uint32_t *)uid;
     }
@@ -60,7 +59,7 @@ void *print_result(void *arg) {
     pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
       sprintf(resultText, resultTextFormat, shared_value);
-      printf("%s\n\r",resultText);
+      printf("%s\n\r", resultText);
       prev_value = shared_value;
       cardFound = 0;
     }
@@ -69,6 +68,24 @@ void *print_result(void *arg) {
   }
 
   return NULL;
+}
+
+SDL_Texture *renderText(SDL_Renderer *renderer, TTF_Font *font,
+                        const char *message, SDL_Color color,
+                        SDL_Rect *rectOut) {
+  SDL_Surface *surf = TTF_RenderText_Solid(font, message, color);
+  if (!surf)
+    return NULL;
+
+  SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, surf);
+  SDL_FreeSurface(surf);
+
+  rectOut->x = 0; // or wherever you want
+  rectOut->y = 0;
+  rectOut->w = surf->w;
+  rectOut->h = surf->h;
+
+  return tex;
 }
 
 int main() {
@@ -133,8 +150,6 @@ int main() {
 
   while (running) {
     while (SDL_PollEvent(&e)) {
-        printf("test\n\r");
-
       switch (e.type) {
       case SDL_QUIT:
       case SDL_KEYDOWN:
@@ -142,6 +157,19 @@ int main() {
         break;
       }
     }
+
+    if (cardFound && prev_value != shared_value) {
+      prev_value = shared_value;
+
+      if (textTexture)
+        SDL_DestroyTexture(textTexture);
+      // char msg[64];
+      // sprintf(resultText, resultTextFormat, shared_value);
+      snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
+
+      textTexture = renderText(renderer, font, resultText, color, &dest);
+    }
+
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, &dest);
