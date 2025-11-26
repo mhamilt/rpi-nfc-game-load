@@ -190,10 +190,10 @@ int main() {
 
   // Set the display size you want
   SDL_Rect coverDest;
-  coverDest.x = 0;   // X position on screen
-  coverDest.y = 0;   // Y position on screen
-  coverDest.w = 318; // Width to draw
-  coverDest.h = 480; // Height to draw
+  coverDest.x = windowWidth /2;   // X position on screen
+  coverDest.y = windowHeight/2;   // Y position on screen
+  coverDest.w = imgW[0]; // Width to draw
+  coverDest.h = imgH[0]; // Height to draw
 
   currentCoverTexture = coverTextures[textureIndex];
   //---------------------------------------------------------------------------
