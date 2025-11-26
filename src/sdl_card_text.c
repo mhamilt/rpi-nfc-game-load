@@ -133,6 +133,7 @@ int main() {
 
   while (running) {
     while (SDL_PollEvent(&e)) {
+        printf("test\n\r");
 
       switch (e.type) {
       case SDL_QUIT:
@@ -141,7 +142,6 @@ int main() {
         break;
       }
     }
-    printf("test\n\r");
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, &dest);
