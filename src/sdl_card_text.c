@@ -162,7 +162,7 @@ int main() {
       prev_value = shared_value;
 
       if (texture)
-        SDL_DestroyTexture(textTexture);
+        SDL_DestroyTexture(texture);
       // char msg[64];
       // sprintf(resultText, resultTextFormat, shared_value);
       snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
