@@ -157,17 +157,14 @@ int main() {
   destRect.x = 100;
   destRect.y = 100;
 
-
-  SDL_Surface *surf1 = TTF_RenderText_Blended(font, "Hello", color);
-  SDL_Texture *textTexture1 = SDL_CreateTextureFromSurface(renderer, surf1);
-  SDL_FreeSurface(surf1);
-  SDL_Texture *textTexture2;
-
   SDL_Texture *textTextures[2];
-
   uint8_t textureIndex = 0;
 
-  SDL_Texture *currentTexture = textTexture1;
+  SDL_Surface *textSurf = TTF_RenderText_Blended(font, "Hello", color);
+  SDL_Texture *textTextures[textureIndex] = SDL_CreateTextureFromSurface(renderer, textSurf);
+  SDL_FreeSurface(textSurf);
+  
+  SDL_Texture *currentTexture = textTextures[textureIndex];
   SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
 
   SDL_Event e;
