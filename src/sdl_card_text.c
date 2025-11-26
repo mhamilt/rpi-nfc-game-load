@@ -167,7 +167,7 @@ int main() {
   textSurf = TTF_RenderText_Blended(font, "World", color);
   textTextures[1] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
-  
+
   SDL_Texture *currentTexture = textTextures[textureIndex];
   SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
 
@@ -228,7 +228,7 @@ int main() {
           //       SDL_CreateTextureFromSurface(renderer, textSurf);
           //   SDL_FreeSurface(textSurf);
 
-          //   swapTexture = 0;
+          swapTexture = 0;
           fade_state = FADE_OUT;
         }
         break;
