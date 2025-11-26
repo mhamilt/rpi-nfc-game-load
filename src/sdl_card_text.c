@@ -171,7 +171,7 @@ int main() {
 
   // Wait for the thread to finish
   pthread_join(poll_card_reader_thread, NULL);
-  pthread_join(print_result_thread, NULL);
+//   pthread_join(print_result_thread, NULL);
 
   pthread_mutex_destroy(&lock);
 
