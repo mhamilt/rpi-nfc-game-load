@@ -13,7 +13,7 @@ volatile uint8_t searchingForCard = 1;
 volatile uint8_t newCardFound = 0;
 pthread_mutex_t lock;       // mutex to protect access
 
-int thread_func(void* arg) {
+void* thread_func(void* arg) {
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     int32_t uid_len = 0;
@@ -22,7 +22,7 @@ int thread_func(void* arg) {
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK) {
         printf("Found PN532 with firmware version: %d.%d\r\n", buff[1], buff[2]);
     } else {
-        return -1;
+        return NULL;
     }
     PN532_SamConfiguration(&pn532);
     printf("Waiting for RFID/NFC card...\r\n");
