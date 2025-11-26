@@ -218,7 +218,7 @@ int main() {
       }
       break;
     case FADE_OUT:
-      if (alpha > 0) {
+      if (alpha >= 0) {
         alpha -= alphaStep;
         if (alpha <= 0) {
           alpha = 0;
