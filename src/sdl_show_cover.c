@@ -89,25 +89,6 @@ void *print_result(void *arg) {
   return NULL;
 }
 //-----------------------------------------------------------------------------
-SDL_Texture *renderText(SDL_Renderer *renderer, TTF_Font *font,
-                        const char *message, SDL_Color color,
-                        SDL_Rect *rectOut) {
-  SDL_Surface *surf = TTF_RenderText_Solid(font, message, color);
-  if (!surf)
-    return NULL;
-
-  SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, surf);
-  SDL_FreeSurface(surf);
-
-  rectOut->x = 0; // or wherever you want
-  rectOut->y = 0;
-  rectOut->w = surf->w;
-  rectOut->h = surf->h;
-
-  return tex;
-}
-
-//-----------------------------------------------------------------------------
 
 int main() {
   pthread_t poll_card_reader_thread;
