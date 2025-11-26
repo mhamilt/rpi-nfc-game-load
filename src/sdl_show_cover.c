@@ -186,7 +186,9 @@ int main() {
   }
 
   // Convert surface to texture
-  int imgW int imgH imgW[0] = surface->w;
+  int imgW[2]; 
+  int imgH[2];
+  imgW[0] = surface->w;
   imgH[0] = surface->h;
   coverTextures[0] = SDL_CreateTextureFromSurface(renderer, coverSurface);
   SDL_FreeSurface(coverSurface);
