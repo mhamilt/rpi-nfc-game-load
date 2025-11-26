@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
             
             if(gameFound)
             {
-                sprintf(system_command, system_command_format, gamelist[i].console, gamelist[i].console, gamelist[i].filename);
+                sprintf(system_command, system_command_format, gamelist[gameNum].console, gamelist[gameNum].console, gamelist[gameNum].filename);
                 printf("%s\n", system_command);
             }
             else
