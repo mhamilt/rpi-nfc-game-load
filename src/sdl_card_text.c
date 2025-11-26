@@ -179,8 +179,8 @@ int main() {
       }
     }
 
-    if (cardFound && prev_value != shared_value) {
-      prev_value = shared_value;
+    if (cardFound) {
+      
       cardFound = 0;
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, "WORLD", color);
