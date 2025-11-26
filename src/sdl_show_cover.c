@@ -54,6 +54,11 @@ void *poll_card_reader(void *arg) {
   PN532_SamConfiguration(&pn532);
   printf("Waiting for RFID/NFC card...\r\n");
 
+  SDL_DisplayMode dm;
+  if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
+    printf("Desktop resolution: %dx%d\n", dm.w, dm.h);
+  }
+
   while (searchingForCard) {
     pthread_mutex_lock(&lock); // lock before modifying
     uid_len =
