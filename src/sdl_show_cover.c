@@ -205,7 +205,7 @@ int main() {
   }
   imgW[1] = coverSurface->w;
   imgH[1] = coverSurface->h;
-  coverTextures[0] = SDL_CreateTextureFromSurface(renderer, coverSurface);
+  coverTextures[1] = SDL_CreateTextureFromSurface(renderer, coverSurface);
   SDL_FreeSurface(coverSurface);
 
   // Set the display size you want
