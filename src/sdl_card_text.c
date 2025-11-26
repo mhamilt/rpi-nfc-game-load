@@ -262,11 +262,21 @@ int main() {
   // SDL Teardown
   SDL_DestroyTexture(textTextures[0]);
   SDL_DestroyTexture(textTextures[1]);
+  SDL_DestroyTexture(coverTextures[0]);
+  SDL_DestroyTexture(coverTextures[1]);
   TTF_CloseFont(font);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   TTF_Quit();
   SDL_Quit();
+  //---------------------------------------------------------------------------
+  system("stty sane");
+  //---------------------------------------------------------------------------
+  int gameNum = textureIndex;
+  sprintf(system_command, system_command_format, gamelist[gameNum].console,
+          gamelist[gameNum].console, gamelist[gameNum].filename);
+  printf("%s\n", system_command);
+  system(system_command);
   //---------------------------------------------------------------------------
   return 0;
 }
