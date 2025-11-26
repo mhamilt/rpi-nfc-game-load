@@ -376,3 +376,35 @@ int main() {
   return 0;
 }
 //-----------------------------------------------------------------------------
+
+
+// // 1. Hide console + disable keyboard
+// system("setterm -cursor off");
+// system("stty -echo -icanon");
+
+// // 2. Switch to a clean VT
+// system("chvt 2");
+
+// // 3. Shutdown SDL
+// SDL_DestroyRenderer(renderer);
+// SDL_DestroyWindow(window);
+// SDL_Quit();
+
+// // 4. Launch emulator
+// pid_t pid = fork();
+// if (pid == 0) {
+//     execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
+//           "runcommand.sh", "0", "_SYS_", "nes",
+//           "/home/pi/RetroPie/roms/nes/game.nes",
+//           (char*)NULL);
+//     exit(1);
+// }
+// waitpid(pid, NULL, 0);
+
+// // 5. Restore VT + terminal
+// system("chvt 1");
+// system("stty echo icanon");
+// system("setterm -cursor on");
+
+// // 6. Reinitialize SDL
+// SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS);
