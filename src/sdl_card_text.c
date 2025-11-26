@@ -235,6 +235,7 @@ int main() {
       case FADE_OUT_END:
         textureIndex = (textureIndex == 1) ? 0 : 1;
         currentTexture = textTextures[textureIndex];
+        SDL_SetTextureAlphaMod(currentTexture, 0);
         SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
         value_updated = 0;
         fade_state = FADE_IN;
