@@ -151,11 +151,11 @@ int main() {
   //   SDL_FreeSurface(surface);
 
   SDL_Surface *surf1 = TTF_RenderText_Blended(font, "Hello", color);
-  textTexture1 = SDL_CreateTextureFromSurface(renderer, surf1);
+  SDL_Texture *textTexture1 = SDL_CreateTextureFromSurface(renderer, surf1);
   SDL_FreeSurface(surf1);
 
   SDL_Surface *surf2 = TTF_RenderText_Blended(font, "World", color);
-  textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
+  SDL_Texture *textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
   SDL_FreeSurface(surf2);
 
   currentTexture = textTexture1;
@@ -204,7 +204,8 @@ int main() {
   printf("Final Card ID: %x\n", shared_value);
   //---------------------------------------------------------------------------
   // SDL Teardown
-  SDL_DestroyTexture(texture);
+  SDL_DestroyTexture(textTexture1);
+  SDL_DestroyTexture(textTexture2);
   TTF_CloseFont(font);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
