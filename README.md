@@ -54,8 +54,10 @@ cd pn532-lib/example/raspberrypi/ && make
 
 - libsdl2-dev
 - libsdl2-ttf-dev
+- pthread
 
 ## Compile 
 
 - gcc sdl_bmp.c -lSDL2 -o sdl_image
 - gcc sdl_text.c -lSDL2 -lSDL2_ttf -o sdl_text
+- gcc sdl_thread.c -lSDL2 -lSDL2_ttf -o sdl_thread
