@@ -172,10 +172,10 @@ int main() {
   SDL_Texture *currentTexture = textTextures[textureIndex];
 
   SDL_Rect textDest;
-  coverDest.x = 0;  // X position on screen
-  coverDest.y = 0; // Y position on screen
-  coverDest.w = 100;          // Width to draw
-  coverDest.h = 100;          // Height to draw
+  textDest.x = 0;  // X position on screen
+  textDest.y = 0; // Y position on screen
+  textDest.w = 100;          // Width to draw
+  textDest.h = 100;          // Height to draw
 
   SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
 
