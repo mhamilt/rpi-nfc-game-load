@@ -164,6 +164,10 @@ int main() {
   SDL_FreeSurface(surf1);
   SDL_Texture *textTexture2;
 
+  SDL_Texture *textTextures[2];
+
+  uint8_t textureIndex = 0;
+
   SDL_Texture *currentTexture = textTexture1;
   SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
 
@@ -171,6 +175,9 @@ int main() {
   int running = 1;
 
   char sdlText[10];
+
+  uint16_t alpha = 0;
+  uint8_t  alphaStep = 1;
 
   while (running) {
     while (SDL_PollEvent(&e)) {
@@ -181,12 +188,30 @@ int main() {
         break;
       }
     }
+    // // fade Out
+    // if (alpha > 0) {
+    //   alpha -= alphaStep;
+    //   if (alpha < 0)
+    //     alpha = 0;
+    //   SDL_SetTextureAlphaMod(oldTexture, alpha);
+    // }
+    
+    // // Fade In
+    if (alpha < 255) {
+      alpha += alphaStep;
+      if (alpha > 255)
+        alpha = 255;
+      SDL_SetTextureAlphaMod(currentTexture, alpha);
+    }
 
     if (value_updated) {
+
+      //   textureIndex = (textureIndex == 1) ? 0: 1;
+
       sprintf(sdlText, "%X", print_value);
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
-      
+
       if (textTexture2)
         SDL_DestroyTexture(textTexture2);
 
