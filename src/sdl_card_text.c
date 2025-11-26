@@ -165,6 +165,8 @@ int main() {
   SDL_Event e;
   int running = 1;
 
+  char sdlText[10];
+
   while (running) {
     while (SDL_PollEvent(&e)) {
       switch (e.type) {
@@ -178,9 +180,9 @@ int main() {
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
       cardFound = 0;
-      sprintf(resultText, resultTextFormat, shared_value);
-      
-      SDL_Surface *surf2 = TTF_RenderText_Blended(font, resultText, color);
+      sprintf(sdlText, "%d", 5000);
+
+      SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
       SDL_FreeSurface(surf2);
   
