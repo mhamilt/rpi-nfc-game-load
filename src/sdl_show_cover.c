@@ -178,7 +178,8 @@ int main() {
   //---------------------------------------------------------------------------
   // Cover Art
   // Load the BMP file
-  SDL_Texture *currentCoverTexture SDL_Texture *coverTextures[2];
+  SDL_Texture *currentCoverTexture; 
+  SDL_Texture *coverTextures[2];
   SDL_Surface *coverSurface = SDL_LoadBMP("turtles.bmp");
   if (!coverSurface) {
     SDL_Log("Failed to load BMP: %s", SDL_GetError());
@@ -286,7 +287,7 @@ int main() {
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, currentTexture, NULL, &destRect);
-    SDL_RenderCopy(renderer, texture, NULL, &coverDest);
+    SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
     SDL_RenderPresent(renderer);
   }
   //---------------------------------------------------------------------------
