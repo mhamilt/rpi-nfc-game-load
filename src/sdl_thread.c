@@ -13,7 +13,7 @@ volatile uint8_t searchingForCard = 1;
 volatile uint8_t newCardFound = 0;
 pthread_mutex_t lock;       // mutex to protect access
 
-void* thread_func(void* arg) {
+int thread_func(void* arg) {
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     int32_t uid_len = 0;
