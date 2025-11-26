@@ -171,7 +171,7 @@ int main() {
     }
 
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+    SDL_RenderCopy(renderer, texture, NULL, &dest);
     SDL_RenderPresent(renderer);
   }
   //---------------------------------------------------------------------------
