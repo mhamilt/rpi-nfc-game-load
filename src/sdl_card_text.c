@@ -71,7 +71,7 @@ void *print_result(void *arg) {
 
 int main() {
   pthread_t poll_card_reader_thread;
-  pthread_t print_result_thread;
+//   pthread_t print_result_thread;
 
   // Initialize mutex
   if (pthread_mutex_init(&lock, NULL) != 0) {
