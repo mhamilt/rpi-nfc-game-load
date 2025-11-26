@@ -88,14 +88,7 @@ int main() {
   printf("Press 'Q' to quit\n");
 
   while (c != 'q') {
-    c = getchar();             // waits for Enter
-    pthread_mutex_lock(&lock); // lock before accessing
-    if (newCardFound) {
-      printf("%x\n", shared_value);
-      prev_value = shared_value;
-    }
-    pthread_mutex_unlock(&lock); // unlock after accessing
-    usleep(10 * 1000);
+    c = getchar();             // waits for Enter    
   }
 
   pthread_mutex_lock(&lock); // lock before accessing
