@@ -1,11 +1,14 @@
-#include "pn532.h"
-#include "pn532_rpi.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <stdio.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include "pn532.h"
+#include "pn532_rpi.h"
 
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
