@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     // Load font (adjust path and size)
-    TTF_Font* font = TTF_OpenFont("DejaVuSans.ttf", 48);
+    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 48);
     if (!font) {
         SDL_Log("Failed to load font: %s", TTF_GetError());
         return 1;
