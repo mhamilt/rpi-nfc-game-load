@@ -21,6 +21,9 @@ typedef enum {
 
 FADE_STATE fade_state = NO_FADE;
 
+const uint32_t windowHeight = 600;
+const uint32_t windowWidth = 800;
+
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
 volatile uint8_t searchingForCard = 1;
@@ -119,7 +122,7 @@ int main() {
 
   SDL_Window *window =
       SDL_CreateWindow("SDL Text Example", SDL_WINDOWPOS_CENTERED,
-                       SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+                       SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, 0);
 
   SDL_Renderer *renderer =
       SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -159,7 +162,7 @@ int main() {
   //---------------------------------------------------------------------------
   // Cover Art
   // Load the BMP file
-  SDL_Texture *currentCoverTexture; 
+  SDL_Texture *currentCoverTexture;
   SDL_Texture *coverTextures[2];
   SDL_Surface *coverSurface = SDL_LoadBMP("turtles.bmp");
   if (!coverSurface) {
@@ -168,7 +171,7 @@ int main() {
   }
 
   // Convert surface to texture
-  int imgW[2]; 
+  int imgW[2];
   int imgH[2];
   imgW[0] = coverSurface->w;
   imgH[0] = coverSurface->h;
