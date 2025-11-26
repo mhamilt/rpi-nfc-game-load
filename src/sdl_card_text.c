@@ -15,8 +15,8 @@ volatile uint8_t searchingForCard = 1;
 volatile uint8_t cardFound = 0;
 pthread_mutex_t lock; // mutex to protect access
 
-uint32_t print_value   = 0;
-uint8_t  value_updated = 0;
+uint32_t print_value = 0;
+uint8_t value_updated = 0;
 
 const char *resultTextFormat = "%x";
 char resultText[40];
@@ -171,7 +171,6 @@ int main() {
   int running = 1;
 
   char sdlText[10];
-  
 
   while (running) {
     while (SDL_PollEvent(&e)) {
@@ -187,6 +186,10 @@ int main() {
       sprintf(sdlText, "%x", print_value);
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
+      
+      if (textTexture2)
+        SDL_DestroyTexture(textTexture2);
+
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
       SDL_FreeSurface(surf2);
 
