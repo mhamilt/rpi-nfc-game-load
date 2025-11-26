@@ -145,15 +145,18 @@ int main() {
     return 1;
   }
 
-  // Set text color
-  SDL_Color color = {255, 255, 255, 255}; // white
+  SDL_DisplayMode dm;
+  if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
+    printf("Desktop resolution: %dx%d\n", dm.w, dm.h);
+  }
 
-  SDL_Rect destRect;
-  destRect.x = 100;
-  destRect.y = 100;
-
+  windowWidth = dm.w;
+  windowHeight = dm.h;
   //---------------------------------------------------------------------------
   // Text
+
+  // Set text color
+  SDL_Color color = {255, 255, 255, 255}; // white
 
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
