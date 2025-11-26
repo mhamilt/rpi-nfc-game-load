@@ -74,6 +74,11 @@ void *poll_card_reader(void *arg) {
 //-----------------------------------------------------------------------------
 void *print_result(void *arg) {
 
+  SDL_DisplayMode dm;
+  if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
+    printf("Desktop resolution: %dx%d\n", dm.w, dm.h);
+  }
+
   while (searchingForCard) {
     pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
@@ -190,10 +195,10 @@ int main() {
 
   // Set the display size you want
   SDL_Rect coverDest;
-  coverDest.x = windowWidth /2;   // X position on screen
-  coverDest.y = windowHeight/2;   // Y position on screen
-  coverDest.w = imgW[0]; // Width to draw
-  coverDest.h = imgH[0]; // Height to draw
+  coverDest.x = windowWidth / 2;  // X position on screen
+  coverDest.y = windowHeight / 2; // Y position on screen
+  coverDest.w = imgW[0];          // Width to draw
+  coverDest.h = imgH[0];          // Height to draw
 
   currentCoverTexture = coverTextures[textureIndex];
   //---------------------------------------------------------------------------
