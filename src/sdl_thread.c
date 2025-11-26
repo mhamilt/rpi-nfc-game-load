@@ -8,7 +8,7 @@
 #include "pn532_rpi.h"
 
 volatile uint32_t shared_value = 0;
-volatile uint32_t prev_value = 0; 
+volatile uint32_t prev_value = 1; 
 volatile uint8_t searchingForCard = 1;
 volatile uint8_t newCardFound = 0;
 pthread_mutex_t lock;       // mutex to protect access
@@ -73,7 +73,7 @@ int main() {
     while (c != 'q') {
         c = getchar();  // waits for Enter
         pthread_mutex_lock(&lock);      // lock before accessing
-        if(newCardFound && prev_value != shared_value)
+        if(newCardFound)
         {
             printf("%x\n", shared_value);
             prev_value = shared_value;
@@ -91,6 +91,6 @@ int main() {
     
     pthread_mutex_destroy(&lock);
     
-    printf("Final shared_value = %d\n", shared_value);
+    printf("Final Card ID: %x\n", shared_value);
     return 0;
 }
