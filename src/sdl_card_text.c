@@ -256,8 +256,8 @@ int main() {
   printf("Final Card ID: %x\n", shared_value);
   //---------------------------------------------------------------------------
   // SDL Teardown
-  SDL_DestroyTexture(textTexture1);
-  SDL_DestroyTexture(textTexture2);
+  SDL_DestroyTexture(textTexture[0]);
+  SDL_DestroyTexture(textTexture[1]);
   TTF_CloseFont(font);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
