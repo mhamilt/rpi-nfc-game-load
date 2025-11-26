@@ -22,7 +22,7 @@ const char* path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_
 char system_command[sizeof(path) + 100];
 const char* system_command_format = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s /home/pi/RetroPie/roms/%s/%s";
 
-Game gamelist[numGames] = {
+Game gamelist[] = {
     {.card_id =  {0x80, 0xc4, 0x93, 0x97}, .console = "nes", .filename = "Gatsby.nes"},
     {.card_id =  {0X4B, 0xEB, 0x08, 0x25}, .console = "nes", .filename = "turtles.nes"}
 };
@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
                 if(*((uint32_t*)gamelist[i].card_id) == *((uint32_t*)uid))
                 {
                     gameNum = i;
+                    gameFound = true;
                     break;
                 }
             }
