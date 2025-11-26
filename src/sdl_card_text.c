@@ -193,7 +193,6 @@ int main() {
 
   uint16_t alpha = 0;
   uint8_t alphaStep = 5;
-
   FADE_STATE fade_state = FADE_IN;
 
   while (running) {
@@ -235,10 +234,10 @@ int main() {
       switch (fade_state) {
       case FADE_IN_END:
         if (swapTexture) {
-          swapTextureIndex = (textureIndex == 1) ? 0 : 1;
+          uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
           sprintf(displayText, "%X", print_value);
 
-          SDL_Surface *textSurf = TTF_RenderText_Blended(font, sdlText, color);
+          SDL_Surface *textSurf = TTF_RenderText_Blended(font, displayText, color);
 
           if (textTextures[swapTextureIndex])
             SDL_DestroyTexture(textTextures[swapTextureIndex]);
