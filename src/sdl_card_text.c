@@ -183,7 +183,7 @@ int main() {
     }
 
     if (value_updated) {
-      sprintf(sdlText, "%x", print_value);
+      sprintf(sdlText, "%X", print_value);
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
       
