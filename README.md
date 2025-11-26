@@ -57,4 +57,5 @@ cd pn532-lib/example/raspberrypi/ && make
 
 ## Compile 
 
-gcc sdl_test.c -lSDL2 -o sdl_example
+- gcc sdl_test.c -lSDL2 -o sdl_example
+- gcc main.c -lSDL2 -lSDL2_ttf -o sdl_text
