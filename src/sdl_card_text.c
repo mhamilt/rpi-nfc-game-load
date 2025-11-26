@@ -242,7 +242,7 @@ int main() {
     }
 
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, currentTexture, NULL, &dest1);
+    SDL_RenderCopy(renderer, currentTexture, NULL, &destRect);
     SDL_RenderPresent(renderer);
   }
   //---------------------------------------------------------------------------
