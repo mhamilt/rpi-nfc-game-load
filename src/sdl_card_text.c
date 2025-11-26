@@ -161,7 +161,11 @@ int main() {
   uint8_t textureIndex = 0;
 
   SDL_Surface *textSurf = TTF_RenderText_Blended(font, "Hello", color);
-  textTextures[textureIndex] = SDL_CreateTextureFromSurface(renderer, textSurf);
+  textTextures[0] = SDL_CreateTextureFromSurface(renderer, textSurf);
+  SDL_FreeSurface(textSurf);
+  
+  textSurf = TTF_RenderText_Blended(font, "World", color);
+  textTextures[1] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
   
   SDL_Texture *currentTexture = textTextures[textureIndex];
