@@ -246,6 +246,7 @@ int main() {
         fade_state = FADE_IN_END;
       }
       SDL_SetTextureAlphaMod(currentTexture, alpha);
+      SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
       break;
     case FADE_OUT:
       alpha -= alphaStep;
@@ -254,6 +255,7 @@ int main() {
         fade_state = FADE_OUT_END;
       }
       SDL_SetTextureAlphaMod(currentTexture, alpha);
+      SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
       break;
     }
 
@@ -273,7 +275,7 @@ int main() {
           textTextures[swapTextureIndex] =
               SDL_CreateTextureFromSurface(renderer, textSurf);
           SDL_FreeSurface(textSurf);
-
+          
           swapTexture = 0;
           fade_state = FADE_OUT;
         }
@@ -281,8 +283,15 @@ int main() {
       case FADE_OUT_END:
         textureIndex = (textureIndex == 1) ? 0 : 1;
         currentTexture = textTextures[textureIndex];
+        currentCoverTexture = coverTextures[textureIndex];
         SDL_SetTextureAlphaMod(currentTexture, 0);
+        SDL_SetTextureAlphaMod(currentCoverTexture, 0);
         SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
+        coverDest.x = (windowWidth  - imgW[textureIndex]) / 2;  // X position on screen
+        coverDest.y = (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
+        coverDest.w = imgW[textureIndex];          // Width to draw
+        coverDest.h = imgH[textureIndex];          // Height to draw
+
         value_updated = 0;
         fade_state = FADE_IN;
         break;
