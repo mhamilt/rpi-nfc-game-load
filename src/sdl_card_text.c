@@ -168,7 +168,7 @@ int main() {
   uint8_t textureIndex = 0;
 
   SDL_Texture *currentTexture = textTexture1;
-  SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
+  SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
 
   SDL_Event e;
   int running = 1;
