@@ -10,21 +10,25 @@
 #include <time.h>
 #include <unistd.h>
 //-----------------------------------------------------------------------------
-typedef struct
-{
-    uint8_t     card_id[4];
-    const char* console;
-    const char* filename;
+typedef struct {
+  uint8_t card_id[4];
+  const char *console;
+  const char *filename;
 } Game;
 //-----------------------------------------------------------------------------
-Game gamelist[] = {
-    {.card_id =  {0x80, 0xc4, 0x93, 0x97}, .console = "nes", .filename = "gatsby.nes"},
-    {.card_id =  {0X4B, 0xEB, 0x08, 0x25}, .console = "nes", .filename = "turtles.nes"}
-};
+Game gamelist[] = {{.card_id = {0x80, 0xc4, 0x93, 0x97},
+                    .console = "nes",
+                    .filename = "gatsby.nes"},
+                   {.card_id = {0X4B, 0xEB, 0x08, 0x25},
+                    .console = "nes",
+                    .filename = "turtles.nes"}};
 
-const char* path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ nes /home/pi/RetroPie/roms/nes/";
+const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
+                   "_SYS_ nes /home/pi/RetroPie/roms/nes/";
 char system_command[sizeof(path) + 100];
-const char* system_command_format = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s /home/pi/RetroPie/roms/%s/%s";
+const char *system_command_format =
+    "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s "
+    "/home/pi/RetroPie/roms/%s/%s";
 
 //-----------------------------------------------------------------------------
 typedef enum {
@@ -188,10 +192,10 @@ int main() {
   SDL_Texture *currentTexture = textTextures[textureIndex];
 
   SDL_Rect textDest;
-  textDest.x = 0;  // X position on screen
-  textDest.y = 0; // Y position on screen
-  textDest.w = 100;          // Width to draw
-  textDest.h = 100;          // Height to draw
+  textDest.x = 0;   // X position on screen
+  textDest.y = 0;   // Y position on screen
+  textDest.w = 100; // Width to draw
+  textDest.h = 100; // Height to draw
 
   SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
 
@@ -228,10 +232,10 @@ int main() {
 
   // Set the display size you want
   SDL_Rect coverDest;
-  coverDest.x = (windowWidth  - imgW[textureIndex]) / 2;  // X position on screen
+  coverDest.x = (windowWidth - imgW[textureIndex]) / 2;  // X position on screen
   coverDest.y = (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
-  coverDest.w = imgW[textureIndex];          // Width to draw
-  coverDest.h = imgH[textureIndex];          // Height to draw
+  coverDest.w = imgW[textureIndex];                      // Width to draw
+  coverDest.h = imgH[textureIndex];                      // Height to draw
 
   currentCoverTexture = coverTextures[textureIndex];
   //---------------------------------------------------------------------------
@@ -293,7 +297,7 @@ int main() {
           textTextures[swapTextureIndex] =
               SDL_CreateTextureFromSurface(renderer, textSurf);
           SDL_FreeSurface(textSurf);
-          
+
           swapTexture = 0;
           fade_state = FADE_OUT;
         }
@@ -305,10 +309,12 @@ int main() {
         SDL_SetTextureAlphaMod(currentTexture, 0);
         SDL_SetTextureAlphaMod(currentCoverTexture, 0);
         SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
-        coverDest.x = (windowWidth  - imgW[textureIndex]) / 2;  // X position on screen
-        coverDest.y = (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
-        coverDest.w = imgW[textureIndex];          // Width to draw
-        coverDest.h = imgH[textureIndex];          // Height to draw
+        coverDest.x =
+            (windowWidth - imgW[textureIndex]) / 2; // X position on screen
+        coverDest.y =
+            (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
+        coverDest.w = imgW[textureIndex];            // Width to draw
+        coverDest.h = imgH[textureIndex];            // Height to draw
 
         value_updated = 0;
         fade_state = FADE_IN;
@@ -335,6 +341,18 @@ int main() {
   printf("Final Card ID: %x\n", shared_value);
   //---------------------------------------------------------------------------
   // SDL Teardown
+  // Hide cursor
+  system("setterm -cursor off");
+
+  // Make background black
+  system("setterm -blank force");
+
+  // Clear the console fully
+  system("clear > /dev/tty1");
+
+  // Disable kernel messages to console
+  system("dmesg -n 1");
+
   SDL_DestroyTexture(textTextures[0]);
   SDL_DestroyTexture(textTextures[1]);
   SDL_DestroyTexture(coverTextures[0]);
