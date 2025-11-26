@@ -158,7 +158,7 @@ int main() {
   SDL_Texture *textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
   SDL_FreeSurface(surf2);
 
-  currentTexture = textTexture1;
+  SDL_Texture *currentTexture = textTexture1;
 
   SDL_Event e;
   int running = 1;
