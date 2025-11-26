@@ -196,6 +196,7 @@ int main() {
   imgW[0] = coverSurface->w;
   imgH[0] = coverSurface->h;
   coverTextures[0] = SDL_CreateTextureFromSurface(renderer, coverSurface);
+  SDL_SetTextureBlendMode(coverTextures[0], SDL_BLENDMODE_BLEND);
   SDL_FreeSurface(coverSurface);
 
   coverSurface = SDL_LoadBMP("gatsby.bmp");
@@ -206,6 +207,7 @@ int main() {
   imgW[1] = coverSurface->w;
   imgH[1] = coverSurface->h;
   coverTextures[1] = SDL_CreateTextureFromSurface(renderer, coverSurface);
+  SDL_SetTextureBlendMode(coverTextures[1], SDL_BLENDMODE_BLEND);
   SDL_FreeSurface(coverSurface);
 
   // Set the display size you want
