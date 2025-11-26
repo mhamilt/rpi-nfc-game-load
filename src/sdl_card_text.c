@@ -15,6 +15,9 @@ volatile uint8_t searchingForCard = 1;
 volatile uint8_t cardFound = 0;
 pthread_mutex_t lock; // mutex to protect access
 
+uint32_t print_value   = 0;
+uint8_t  value_updated = 0;
+
 const char *resultTextFormat = "%x";
 char resultText[40];
 
@@ -61,6 +64,8 @@ void *print_result(void *arg) {
       sprintf(resultText, resultTextFormat, shared_value);
       printf("%s\n\r", resultText);
       prev_value = shared_value;
+      print_value = shared_value;
+      value_updated = 1;
       cardFound = 0;
     }
     pthread_mutex_unlock(&lock); // unlock after accessing
@@ -166,8 +171,7 @@ int main() {
   int running = 1;
 
   char sdlText[10];
-    sprintf(sdlText, "%d", 5000);
-//   strcpy(sdlText, "world");
+  
 
   while (running) {
     while (SDL_PollEvent(&e)) {
@@ -179,9 +183,8 @@ int main() {
       }
     }
 
-    if (cardFound) {
-      
-      cardFound = 0;
+    if (value_updated) {
+      sprintf(sdlText, "%x", print_value);
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
@@ -189,14 +192,8 @@ int main() {
 
       currentTexture = textTexture2;
       SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
-      //   SDL_QueryTexture(texture2, NULL, NULL, &dest.w, &dest.h);
-      //   if (texture)
-      //     SDL_DestroyTexture(texture);
-      // char msg[64];
-      //
-      //   snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
 
-      //   texture = renderText(renderer, font, resultText, color, &dest);
+      value_updated = 0;
     }
 
     SDL_RenderClear(renderer);
