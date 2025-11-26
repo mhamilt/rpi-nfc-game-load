@@ -42,6 +42,7 @@ void *poll_card_reader(void *arg) {
         PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
 
     if (uid_len != PN532_STATUS_ERROR) {
+      printf("Card Found\r\n");
       cardFound = 1;
       shared_value = *(uint32_t *)uid;
     }
