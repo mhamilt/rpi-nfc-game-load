@@ -153,26 +153,10 @@ int main() {
   // Set text color
   SDL_Color color = {255, 255, 255, 255}; // white
 
-  // Render text surface
-  //   char msg[128] = "Hello World!";
+  SDL_Rect destRect;
+  destRect.x = 100;
+  destRect.y = 100;
 
-  SDL_Rect dest1;
-  dest1.x = 100;
-  dest1.y = 100;
-
-  SDL_Rect dest2;
-  dest2.x = 100;
-  dest2.y = 100;
-
-  //   SDL_Surface *surface = TTF_RenderText_Solid(font, msg, color);
-  //   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-  //   SDL_FreeSurface(surface);
-  //   SDL_Texture *currentTexture = texture;
-  //   SDL_QueryTexture(currentTexture, NULL, NULL, &dest.w, &dest.h);
-
-  //   surface = TTF_RenderText_Solid(font, "New Texture", color);
-  //   SDL_Texture *texture2 = SDL_CreateTextureFromSurface(renderer, surface);
-  //   SDL_FreeSurface(surface);
 
   SDL_Surface *surf1 = TTF_RenderText_Blended(font, "Hello", color);
   SDL_Texture *textTexture1 = SDL_CreateTextureFromSurface(renderer, surf1);
