@@ -161,13 +161,13 @@ int main() {
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
 
-      if (textTexture)
+      if (texture)
         SDL_DestroyTexture(textTexture);
       // char msg[64];
       // sprintf(resultText, resultTextFormat, shared_value);
       snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
 
-      textTexture = renderText(renderer, font, resultText, color, &dest);
+      texture = renderText(renderer, font, resultText, color, &dest);
     }
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
