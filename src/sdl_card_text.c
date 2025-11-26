@@ -212,8 +212,8 @@ int main() {
       if (alpha >= 255) {
         alpha = 255;
         fade_state = FADE_IN_END;
-        SDL_SetTextureAlphaMod(currentTexture, alpha);
       }
+      SDL_SetTextureAlphaMod(currentTexture, alpha);
       break;
     case FADE_OUT:
       alpha -= alphaStep;
