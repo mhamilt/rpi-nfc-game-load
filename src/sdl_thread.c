@@ -10,7 +10,7 @@
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
 volatile uint8_t searchingForCard = 1;
-volatile uint8_t newCardFound = 0;
+volatile uint8_t cardFound = 0;
 pthread_mutex_t lock; // mutex to protect access
 
 void *poll_card_reader(void *arg) {
@@ -51,9 +51,10 @@ void *print_result(void *arg) {
 
   while (searchingForCard) {
     pthread_mutex_lock(&lock); // lock before accessing
-    if (newCardFound) {
+    if (newCardFound && prev_value != shared_value) {
       printf("%x\n", shared_value);
       prev_value = shared_value;
+      cardFound = 0;
     }
     pthread_mutex_unlock(&lock); // unlock after accessing
     usleep(10 * 1000);
