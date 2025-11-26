@@ -17,6 +17,7 @@ void* thread_func(void* arg) {
     uint8_t buff[255];
     uint8_t uid[MIFARE_UID_MAX_LENGTH];
     int32_t uid_len = 0;
+
     PN532 pn532;    
     PN532_SPI_Init(&pn532);
     if (PN532_GetFirmwareVersion(&pn532, buff) == PN532_STATUS_OK) {
@@ -32,6 +33,14 @@ void* thread_func(void* arg) {
         pthread_mutex_lock(&lock);      // lock before modifying
         uid_len = PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
         if (uid_len != PN532_STATUS_ERROR) {
+            
+            printf("\r\n");
+            printf("Found card with UID: ");
+            for (uint8_t i = 0; i < uid_len; i++) {
+                printf("%02x ", uid[i]);
+            }
+            printf("\r\n");
+
             newCardFound = 1;
             shared_value = *(uint32_t*)uid;
         }
