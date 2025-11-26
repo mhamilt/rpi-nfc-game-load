@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
             {
                 if(*((uint32_t*)gamelist[i].card_id) == *((uint32_t*)uid))
                 {
-                    gameNum = i
+                    gameNum = i;
                     break;
                 }
             }
