@@ -48,3 +48,13 @@ cd pn532-lib/example/raspberrypi/ && make
 ```
 /opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ snes /path/to/ROM
 ```
+
+
+## Dependencies
+
+- libsdl2-dev
+- libsdl2-ttf-dev
+
+## Compile 
+
+gcc sdl_test.c -lSDL2 -o sdl_example
