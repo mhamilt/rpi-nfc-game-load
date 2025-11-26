@@ -170,9 +170,8 @@ int main() {
       texture = renderText(renderer, font, resultText, color, &dest);
     }
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, texture, NULL, &dest);
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     SDL_RenderPresent(renderer);
   }
   //---------------------------------------------------------------------------
