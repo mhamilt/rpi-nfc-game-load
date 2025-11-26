@@ -136,9 +136,9 @@ int main() {
   // Render text surface
   //   char msg[128] = "Hello World!";
 
-  //   SDL_Rect dest;
-  //   dest.x = 100;
-  //   dest.y = 100;
+    SDL_Rect dest;
+    dest.x = 100;
+    dest.y = 100;
 
   //   SDL_Surface *surface = TTF_RenderText_Solid(font, msg, color);
   //   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
