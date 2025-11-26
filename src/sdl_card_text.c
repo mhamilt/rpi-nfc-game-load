@@ -174,12 +174,13 @@ int main() {
         break;
       }
     }
-
-    pthread_mutex_lock(&lock); // lock before accessing
+    
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
       cardFound = 0;
-      SDL_Surface *surf2 = TTF_RenderText_Blended(font, "World", color);
+      sprintf(resultText, resultTextFormat, shared_value);
+      
+      SDL_Surface *surf2 = TTF_RenderText_Blended(font, resultText, color);
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
       SDL_FreeSurface(surf2);
   
@@ -189,12 +190,12 @@ int main() {
       //   if (texture)
       //     SDL_DestroyTexture(texture);
       // char msg[64];
-      // sprintf(resultText, resultTextFormat, shared_value);
+      // 
       //   snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
 
       //   texture = renderText(renderer, font, resultText, color, &dest);
     }
-    pthread_mutex_unlock(&lock); // unlock after modifying
+    
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, currentTexture, NULL, &dest1);
