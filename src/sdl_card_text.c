@@ -218,15 +218,14 @@ int main() {
           //   uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
           //   sprintf(displayText, "%X", print_value);
 
-          //   SDL_Surface *textSurf =
-          //       TTF_RenderText_Blended(font, displayText, color);
+          textSurf = TTF_RenderText_Blended(font, displayText, color);
 
           //   if (textTextures[swapTextureIndex])
           //     SDL_DestroyTexture(textTextures[swapTextureIndex]);
 
           //   textTextures[swapTextureIndex] =
           //       SDL_CreateTextureFromSurface(renderer, textSurf);
-          //   SDL_FreeSurface(textSurf);
+          SDL_FreeSurface(textSurf);
 
           swapTexture = 0;
           fade_state = FADE_OUT;
