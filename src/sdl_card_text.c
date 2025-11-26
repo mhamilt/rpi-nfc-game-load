@@ -137,17 +137,17 @@ int main() {
   char msg[128] = "Hello World!";
   
   SDL_Rect dest;
+  dest.x = 100;
+  dest.y = 100;
 
   SDL_Surface *surface = TTF_RenderText_Solid(font, msg, color);
   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);  
   SDL_FreeSurface(surface);
-  SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
+  SDL_Texture *currentTexture = texture;
+  SDL_QueryTexture(currentTexture, NULL, NULL, &dest.w, &dest.h);
 
   SDL_Event e;
-//   dest.x = 100;
-//   dest.y = 100;
 
-  SDL_Texture *currentTexture = texture;
 
   surface = TTF_RenderText_Solid(font, "New Texture", color);
   SDL_Texture *texture2 = SDL_CreateTextureFromSurface(renderer, surface);  
