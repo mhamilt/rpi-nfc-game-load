@@ -16,12 +16,14 @@ typedef struct {
   const char *filename;
 } Game;
 //-----------------------------------------------------------------------------
-Game gamelist[] = {{.card_id = {0x80, 0xc4, 0x93, 0x97},
-                    .console = "nes",
-                    .filename = "gatsby.nes"},
-                   {.card_id = {0X4B, 0xEB, 0x08, 0x25},
-                    .console = "nes",
-                    .filename = "turtles.nes"}};
+Game gamelist[] = {
+    {.card_id = {0X4B, 0xEB, 0x08, 0x25},
+     .console = "nes",
+     .filename = "turtles.nes"},
+    {.card_id = {0x80, 0xc4, 0x93, 0x97},
+     .console = "nes",
+     .filename = "gatsby.nes"},
+};
 
 const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                    "_SYS_ nes /home/pi/RetroPie/roms/nes/";
