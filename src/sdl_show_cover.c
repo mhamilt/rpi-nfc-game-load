@@ -21,8 +21,8 @@ typedef enum {
 
 FADE_STATE fade_state = NO_FADE;
 
-const uint32_t windowHeight = 600;
-const uint32_t windowWidth = 800;
+uint32_t windowHeight = 600;
+uint32_t windowWidth = 800;
 
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
