@@ -210,8 +210,8 @@ int main() {
 
   // Set the display size you want
   SDL_Rect coverDest;
-  coverDest.x = windowWidth / 2;  // X position on screen
-  coverDest.y = windowHeight / 2; // Y position on screen
+  coverDest.x = (windowWidth  - imgW[0]) / 2;  // X position on screen
+  coverDest.y = (windowHeight - imgH[0]) / 2; // Y position on screen
   coverDest.w = imgW[0];          // Width to draw
   coverDest.h = imgH[0];          // Height to draw
 
