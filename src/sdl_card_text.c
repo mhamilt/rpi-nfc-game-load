@@ -140,27 +140,8 @@ int main() {
         running = 0;
         break;
       }
-
-    //   pthread_mutex_lock(&lock); // lock before accessing
-    //   if (cardFound && prev_value != shared_value) {
-
-    //     printf("Card found:\n\r");
-    //     sprintf(resultText, resultTextFormat, shared_value);
-    //     printf("%s",resultText);
-    //     // sprintf(resultText, resultTextFormat, shared_value);
-        
-    //     // SDL_DestroyTexture(texture);
-    //     // SDL_Surface *surface = TTF_RenderText_Solid(font, resultText, color);
-    //     // SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    //     // SDL_FreeSurface(surface);
-    //     // SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
-
-    //     prev_value = shared_value;
-    //     cardFound = 0;
-    //   }
-    //   pthread_mutex_unlock(&lock); // unlock after accessing
     }
-
+    printf("test\n\r");
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, &dest);
