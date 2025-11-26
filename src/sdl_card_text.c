@@ -180,7 +180,7 @@ int main() {
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
       cardFound = 0;
-      sprintf(sdlText, "%d", 5000);
+      sprintf(sdlText, "hello");
 
       SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
