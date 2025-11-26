@@ -263,6 +263,7 @@ int main() {
 
     switch (fade_state) {
 
+      // use SDL_GetTicks for a consistent duration
     case FADE_IN:
       alpha += alphaStep;
       if (alpha >= 255) {
@@ -376,7 +377,6 @@ int main() {
   return 0;
 }
 //-----------------------------------------------------------------------------
-
 
 // // 1. Hide console + disable keyboard
 // system("setterm -cursor off");
