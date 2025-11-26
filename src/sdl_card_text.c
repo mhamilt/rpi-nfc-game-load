@@ -157,11 +157,8 @@ int main() {
   SDL_Surface *surf1 = TTF_RenderText_Blended(font, "Hello", color);
   SDL_Texture *textTexture1 = SDL_CreateTextureFromSurface(renderer, surf1);
   SDL_FreeSurface(surf1);
-  
-  SDL_Surface *surf2 = TTF_RenderText_Blended(font, "World", color);
-  SDL_Texture *textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
-  SDL_FreeSurface(surf2);
-  
+  SDL_Texture *textTexture2;
+
   SDL_Texture *currentTexture = textTexture1;
   SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
 
@@ -180,6 +177,10 @@ int main() {
 
     if (cardFound) {
     //   prev_value = shared_value;
+      SDL_Surface *surf2 = TTF_RenderText_Blended(font, "World", color);
+      textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
+      SDL_FreeSurface(surf2);
+  
       currentTexture = textTexture2;
       SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
     //   SDL_QueryTexture(texture2, NULL, NULL, &dest.w, &dest.h);
