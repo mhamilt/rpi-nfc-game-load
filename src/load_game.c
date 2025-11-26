@@ -14,7 +14,7 @@ int main(void) {
     // Child process: replace with runcommand
     execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
           "runcommand.sh", "0", "_SYS_", "nes",
-          "/home/pi/RetroPie/roms/nes/game.nes", (char *)NULL);
+          "/home/pi/RetroPie/roms/nes/turtles.nes", (char *)NULL);
 
     // If execl returns, something failed:
     perror("execl failed");
