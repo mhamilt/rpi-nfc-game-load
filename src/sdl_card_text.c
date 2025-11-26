@@ -142,7 +142,9 @@ int main() {
       pthread_mutex_lock(&lock); // lock before accessing
       if (cardFound && prev_value != shared_value) {
 
-        printf("card found\n\r");
+        printf("Card found:\n\r");
+        sprintf(resultText, resultTextFormat, shared_value);
+        printf("%s",resultText);
         // sprintf(resultText, resultTextFormat, shared_value);
         
         // SDL_DestroyTexture(texture);
