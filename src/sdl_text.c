@@ -25,7 +25,9 @@ int main(int argc, char* argv[])
     SDL_Color color = { 255, 255, 255, 255 }; // white
 
     // Render text surface
-    SDL_Surface* surface = TTF_RenderText_Solid(font, "Hello SDL!", color);
+    char msg[128] = "Hello World!";
+
+    SDL_Surface* surface = TTF_RenderText_Solid(font, msg, color);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
 
