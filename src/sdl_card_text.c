@@ -234,27 +234,27 @@ int main() {
       switch (fade_state) {
       case FADE_IN_END:
         if (swapTexture) {
-          uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-          sprintf(displayText, "%X", print_value);
+        //   uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
+        //   sprintf(displayText, "%X", print_value);
 
-          SDL_Surface *textSurf =
-              TTF_RenderText_Blended(font, displayText, color);
+        //   SDL_Surface *textSurf =
+        //       TTF_RenderText_Blended(font, displayText, color);
 
-          if (textTextures[swapTextureIndex])
-            SDL_DestroyTexture(textTextures[swapTextureIndex]);
+        //   if (textTextures[swapTextureIndex])
+        //     SDL_DestroyTexture(textTextures[swapTextureIndex]);
 
-          textTextures[swapTextureIndex] =
-              SDL_CreateTextureFromSurface(renderer, textSurf);
-          SDL_FreeSurface(textSurf);
+        //   textTextures[swapTextureIndex] =
+        //       SDL_CreateTextureFromSurface(renderer, textSurf);
+        //   SDL_FreeSurface(textSurf);
 
-          swapTexture = 0;
+        //   swapTexture = 0;
           fade_state = FADE_OUT;
         }
         break;
       case FADE_OUT_END:
-        textureIndex = (textureIndex == 1) ? 0 : 1;
-        currentTexture = textTextures[textureIndex];
-        SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
+        // textureIndex = (textureIndex == 1) ? 0 : 1;
+        // currentTexture = textTextures[textureIndex];
+        // SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
         value_updated = 0;
         fade_state = FADE_IN;
         break;
