@@ -189,8 +189,8 @@ int main() {
   // Convert surface to texture
   int imgW[2]; 
   int imgH[2];
-  imgW[0] = surface->w;
-  imgH[0] = surface->h;
+  imgW[0] = coverSurface->w;
+  imgH[0] = coverSurface->h;
   coverTextures[0] = SDL_CreateTextureFromSurface(renderer, coverSurface);
   SDL_FreeSurface(coverSurface);
 
@@ -199,8 +199,8 @@ int main() {
     SDL_Log("Failed to load BMP: %s", SDL_GetError());
     return 1;
   }
-  imgW[1] = surface->w;
-  imgH[1] = surface->h;
+  imgW[1] = coverSurface->w;
+  imgH[1] = coverSurface->h;
   coverTextures[0] = SDL_CreateTextureFromSurface(renderer, coverSurface);
   SDL_FreeSurface(coverSurface);
 
