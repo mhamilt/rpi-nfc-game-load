@@ -42,7 +42,7 @@ void *poll_card_reader(void *arg) {
         PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
 
     if (uid_len != PN532_STATUS_ERROR) {
-      printf("Card Found\r\n");
+      
       cardFound = 1;
       shared_value = *(uint32_t *)uid;
     }
@@ -60,6 +60,7 @@ void *print_result(void *arg) {
     pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
       sprintf(resultText, resultTextFormat, shared_value);
+      printf("%s\n\r",resultText);
       prev_value = shared_value;
       cardFound = 0;
     }
