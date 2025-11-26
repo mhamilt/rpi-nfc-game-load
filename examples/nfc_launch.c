@@ -9,17 +9,21 @@
 #include "pn532.h"
 #include "pn532_rpi.h"
 
+typedef struct
+{
+    uint8_t     card_id[4];
+    const char* console;
+    const char* filename;
+} Game;
+
 const uint8_t numGames = 2;
 const char* path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ nes /home/pi/RetroPie/roms/nes/";
 char system_command[sizeof(path) + 100];
+const char* system_command_format = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s /home/pi/RetroPie/roms/%s/%s";
 
-uint8_t target_uids[numGames][MIFARE_UID_MAX_LENGTH] = {
-    {0x80, 0xc4, 0x93, 0x97},
-    {0X4B, 0xEB, 0x08, 0x25}
-};
-const char* gamelist[numGames] = {
-    "turtle.nes",
-    "Gatsby.nes",
+Game gamelist[numGames] = {
+    {.card_id =  {0x80, 0xc4, 0x93, 0x97}, .console = "nes", .filename = "Gatsby.nes"},
+    {.card_id =  {0X4B, 0xEB, 0x08, 0x25}, .console = "nes", .filename = "turtles.nes"}
 };
 
 
@@ -51,17 +55,16 @@ int main(int argc, char** argv) {
             int gameNum;
             for (int i = 0; i < numGames; i++)            
             {
-                if(*((uint32_t*)target_uid[i]) == *((uint32_t*)uid))
+                if(*((uint32_t*)gamelist[i].card_id) == *((uint32_t*)uid))
                 {
                     gameNum = i
                     break;
                 }
             }
-
+            
             if(gameFound)
             {
-                strcpy(system_command, path);
-                strcat(system_command, gamelist[gameNum]);
+                sprintf(system_command, system_command_format, gamelist[i].console, gamelist[i].console, gamelist[i].filename);
                 printf("%s\n", system_command);
             }
             else
