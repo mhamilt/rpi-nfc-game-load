@@ -136,13 +136,13 @@ int main() {
   // Render text surface
   //   char msg[128] = "Hello World!";
 
-    SDL_Rect dest1;
-    dest1.x = 100;
-    dest1.y = 100;
+  SDL_Rect dest1;
+  dest1.x = 100;
+  dest1.y = 100;
 
-    SDL_Rect dest2;
-    dest2.x = 100;
-    dest2.y = 100;
+  SDL_Rect dest2;
+  dest2.x = 100;
+  dest2.y = 100;
 
   //   SDL_Surface *surface = TTF_RenderText_Solid(font, msg, color);
   //   SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -166,8 +166,8 @@ int main() {
   int running = 1;
 
   char sdlText[10];
-//   sprintf(sdlText, "hello");
-  strcpy(sdlText, "world");
+  //   sprintf(sdlText, "hello");
+//   strcpy(sdlText, "world");
 
   while (running) {
     while (SDL_PollEvent(&e)) {
@@ -178,28 +178,26 @@ int main() {
         break;
       }
     }
-    
+
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
       cardFound = 0;
-      
 
-      SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
+      SDL_Surface *surf2 = TTF_RenderText_Blended(font, "WORLD", color);
       textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
       SDL_FreeSurface(surf2);
-  
+
       currentTexture = textTexture2;
       SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
-    //   SDL_QueryTexture(texture2, NULL, NULL, &dest.w, &dest.h);
+      //   SDL_QueryTexture(texture2, NULL, NULL, &dest.w, &dest.h);
       //   if (texture)
       //     SDL_DestroyTexture(texture);
       // char msg[64];
-      // 
+      //
       //   snprintf(resultText, sizeof(resultText), "Value: %x", shared_value);
 
       //   texture = renderText(renderer, font, resultText, color, &dest);
     }
-    
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, currentTexture, NULL, &dest1);
