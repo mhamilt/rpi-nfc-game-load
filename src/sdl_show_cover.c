@@ -9,7 +9,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    uint8_t     card_id[4];
+    const char* console;
+    const char* filename;
+} Game;
+//-----------------------------------------------------------------------------
+Game gamelist[] = {
+    {.card_id =  {0x80, 0xc4, 0x93, 0x97}, .console = "nes", .filename = "gatsby.nes"},
+    {.card_id =  {0X4B, 0xEB, 0x08, 0x25}, .console = "nes", .filename = "turtles.nes"}
+};
 //-----------------------------------------------------------------------------
 typedef enum {
   FADE_IN,
