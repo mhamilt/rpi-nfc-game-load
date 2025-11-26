@@ -166,8 +166,8 @@ int main() {
   int running = 1;
 
   char sdlText[10];
-  //   sprintf(sdlText, "hello");
-  strcpy(sdlText, "world");
+    sprintf(sdlText, "%d", 5000);
+//   strcpy(sdlText, "world");
 
   while (running) {
     while (SDL_PollEvent(&e)) {
