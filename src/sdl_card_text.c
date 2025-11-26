@@ -1,3 +1,4 @@
+//-----------------------------------------------------------------------------
 #include "pn532.h"
 #include "pn532_rpi.h"
 #include <SDL2/SDL.h>
@@ -8,6 +9,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+//-----------------------------------------------------------------------------
+typedef enum {
+  FADE_IN,
+  FADE_OUT,
+  NO_FADE,
+  FADE_OUT_END,
+  FADE_IN_END,
+} FADE_STATE;
+
+FADE_STATE fade_state = NO_FADE;
 
 volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
@@ -17,10 +28,11 @@ pthread_mutex_t lock; // mutex to protect access
 
 uint32_t print_value = 0;
 uint8_t value_updated = 0;
+uint8_t swapTexture = 0;
 
 const char *resultTextFormat = "%x";
 char resultText[40];
-
+//-----------------------------------------------------------------------------
 void *poll_card_reader(void *arg) {
   uint8_t buff[255];
   uint8_t uid[MIFARE_UID_MAX_LENGTH];
@@ -55,7 +67,7 @@ void *poll_card_reader(void *arg) {
 
   return NULL;
 }
-
+//-----------------------------------------------------------------------------
 void *print_result(void *arg) {
 
   while (searchingForCard) {
@@ -66,6 +78,7 @@ void *print_result(void *arg) {
       prev_value = shared_value;
       print_value = shared_value;
       value_updated = 1;
+      swapTexture = 1;
       cardFound = 0;
     }
     pthread_mutex_unlock(&lock); // unlock after accessing
@@ -74,7 +87,7 @@ void *print_result(void *arg) {
 
   return NULL;
 }
-
+//-----------------------------------------------------------------------------
 SDL_Texture *renderText(SDL_Renderer *renderer, TTF_Font *font,
                         const char *message, SDL_Color color,
                         SDL_Rect *rectOut) {
@@ -92,6 +105,8 @@ SDL_Texture *renderText(SDL_Renderer *renderer, TTF_Font *font,
 
   return tex;
 }
+
+//-----------------------------------------------------------------------------
 
 int main() {
   pthread_t poll_card_reader_thread;
@@ -174,10 +189,12 @@ int main() {
   SDL_Event e;
   int running = 1;
 
-  char sdlText[10];
+  char displayText[10];
 
   uint16_t alpha = 0;
-  uint8_t  alphaStep = 1;
+  uint8_t alphaStep = 5;
+
+  FADE_STATE fade_state = FADE_IN;
 
   while (running) {
     while (SDL_PollEvent(&e)) {
@@ -188,40 +205,59 @@ int main() {
         break;
       }
     }
-    // // fade Out
-    // if (alpha > 0) {
-    //   alpha -= alphaStep;
-    //   if (alpha < 0)
-    //     alpha = 0;
-    //   SDL_SetTextureAlphaMod(oldTexture, alpha);
-    // }
-    
-    // // Fade In
-    if (alpha < 255) {
-      alpha += alphaStep;
-      if (alpha > 255)
-        alpha = 255;
-      SDL_SetTextureAlphaMod(currentTexture, alpha);
+
+    switch (fade_state) {
+
+    case FADE_IN:
+      if (alpha < 255) {
+        alpha += alphaStep;
+        if (alpha > 255) {
+          alpha = 255;
+          fade_state = FADE_IN_END;
+        }
+        SDL_SetTextureAlphaMod(currentTexture, alpha);
+      }
+      break;
+    case FADE_OUT:
+      if (alpha > 0) {
+        alpha -= alphaStep;
+        if (alpha <= 0) {
+          alpha = 0;
+          fade_state = FADE_OUT_END;
+        }
+        SDL_SetTextureAlphaMod(currentTexture, alpha);
+      }
+      break;
     }
 
     if (value_updated) {
 
-      //   textureIndex = (textureIndex == 1) ? 0: 1;
+      switch (fade_state) {
+      case FADE_IN_END:
+        if (swapTexture) {
+          swapTextureIndex = (textureIndex == 1) ? 0 : 1;
+          sprintf(displayText, "%X", print_value);
 
-      sprintf(sdlText, "%X", print_value);
+          SDL_Surface *textSurf = TTF_RenderText_Blended(font, sdlText, color);
 
-      SDL_Surface *surf2 = TTF_RenderText_Blended(font, sdlText, color);
+          if (textTextures[swapTextureIndex])
+            SDL_DestroyTexture(textTextures[swapTextureIndex]);
 
-      if (textTexture2)
-        SDL_DestroyTexture(textTexture2);
+          textTextures[swapTextureIndex] =
+              SDL_CreateTextureFromSurface(renderer, textSurf);
+          SDL_FreeSurface(textSurf);
 
-      textTexture2 = SDL_CreateTextureFromSurface(renderer, surf2);
-      SDL_FreeSurface(surf2);
-
-      currentTexture = textTexture2;
-      SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
-
-      value_updated = 0;
+          swapTexture = 0;
+          fade_state = FADE_OUT;
+        }
+        break;
+      case FADE_OUT_END:
+        textureIndex = (textureIndex == 1) ? 0 : 1;
+        currentTexture = textTextures[textureIndex];
+        SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
+        value_updated fade_state = FADE_IN;
+        break;
+      }
     }
 
     SDL_RenderClear(renderer);
@@ -252,3 +288,4 @@ int main() {
   //---------------------------------------------------------------------------
   return 0;
 }
+//-----------------------------------------------------------------------------
