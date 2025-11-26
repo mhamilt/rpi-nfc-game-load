@@ -208,24 +208,21 @@ int main() {
     switch (fade_state) {
 
     case FADE_IN:
-      if (alpha < 255) {
-        alpha += alphaStep;
-        if (alpha > 255) {
-          alpha = 255;
-          fade_state = FADE_IN_END;
-        }
+
+      alpha += alphaStep;
+      if (alpha > 255) {
+        alpha = 255;
+        fade_state = FADE_IN_END;
         SDL_SetTextureAlphaMod(currentTexture, alpha);
       }
       break;
     case FADE_OUT:
-      if (alpha >= 0) {
-        alpha -= alphaStep;
-        if (alpha <= 0) {
-          alpha = 0;
-          fade_state = FADE_OUT_END;
-        }
-        SDL_SetTextureAlphaMod(currentTexture, alpha);
+      alpha -= alphaStep;
+      if (alpha <= 0) {
+        alpha = 0;
+        fade_state = FADE_OUT_END;
       }
+      SDL_SetTextureAlphaMod(currentTexture, alpha);
       break;
     }
 
@@ -234,20 +231,20 @@ int main() {
       switch (fade_state) {
       case FADE_IN_END:
         if (swapTexture) {
-        //   uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-        //   sprintf(displayText, "%X", print_value);
+          //   uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
+          //   sprintf(displayText, "%X", print_value);
 
-        //   SDL_Surface *textSurf =
-        //       TTF_RenderText_Blended(font, displayText, color);
+          //   SDL_Surface *textSurf =
+          //       TTF_RenderText_Blended(font, displayText, color);
 
-        //   if (textTextures[swapTextureIndex])
-        //     SDL_DestroyTexture(textTextures[swapTextureIndex]);
+          //   if (textTextures[swapTextureIndex])
+          //     SDL_DestroyTexture(textTextures[swapTextureIndex]);
 
-        //   textTextures[swapTextureIndex] =
-        //       SDL_CreateTextureFromSurface(renderer, textSurf);
-        //   SDL_FreeSurface(textSurf);
+          //   textTextures[swapTextureIndex] =
+          //       SDL_CreateTextureFromSurface(renderer, textSurf);
+          //   SDL_FreeSurface(textSurf);
 
-        //   swapTexture = 0;
+          //   swapTexture = 0;
           fade_state = FADE_OUT;
         }
         break;
