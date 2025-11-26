@@ -1,5 +1,5 @@
 CC = gcc
-DLIBS = -lwiringPi
+DLIBS = -lwiringPi -lSDL2 -lSDL2_ttf
 INC_DIR = ../
 SRCS = $(wildcard *.c)
 all: $(SRCS:.c=.exe)
