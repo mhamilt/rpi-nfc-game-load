@@ -56,8 +56,8 @@ int main(int argc, char* argv[])
         }
 
         SDL_RenderClear(renderer);
-        // SDL_RenderCopy(renderer, texture, NULL, &dest);  // draw at given size        
-        SDL_RenderCopy(renderer, texture, NULL, NULL);  // stretch to window
+        SDL_RenderCopy(renderer, texture, NULL, &dest);  // draw at given size        
+        // SDL_RenderCopy(renderer, texture, NULL, NULL);  // stretch to window
         SDL_RenderPresent(renderer);
     }
 
