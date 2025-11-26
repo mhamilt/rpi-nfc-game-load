@@ -149,7 +149,7 @@ int main() {
 
   SDL_Texture *currentTexture = texture;
 
-  *surface = TTF_RenderText_Solid(font, "New Texture", color);
+  surface = TTF_RenderText_Solid(font, "New Texture", color);
   SDL_Texture *texture2 = SDL_CreateTextureFromSurface(renderer, surface);  
   SDL_FreeSurface(surface);
   
