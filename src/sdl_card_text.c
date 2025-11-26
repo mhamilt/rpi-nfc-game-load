@@ -233,9 +233,9 @@ int main() {
         }
         break;
       case FADE_OUT_END:
-        // textureIndex = (textureIndex == 1) ? 0 : 1;
-        // currentTexture = textTextures[textureIndex];
-        // SDL_QueryTexture(currentTexture, NULL, NULL, &dest1.w, &dest1.h);
+        textureIndex = (textureIndex == 1) ? 0 : 1;
+        currentTexture = textTextures[textureIndex];
+        SDL_QueryTexture(currentTexture, NULL, NULL, &destRect.w, &destRect.h);
         value_updated = 0;
         fade_state = FADE_IN;
         break;
