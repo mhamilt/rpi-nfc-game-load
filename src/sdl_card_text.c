@@ -175,6 +175,7 @@ int main() {
       }
     }
 
+    pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
       prev_value = shared_value;
       cardFound = 0;
@@ -193,6 +194,7 @@ int main() {
 
       //   texture = renderText(renderer, font, resultText, color, &dest);
     }
+    pthread_mutex_unlock(&lock); // unlock after modifying
 
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, currentTexture, NULL, &dest1);
