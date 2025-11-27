@@ -185,7 +185,7 @@ int main() {
   //---------------------------------------------------------------------------
   // Welcome Message
   const int numLines = 4;
-  const char *welcomeMessageLines[4] = {
+  const char *welcomeMessageLines[] = {
       "Merry Christmas! Rowan and Sandy",
       "Love from Mummy and Daddy",
       "",
