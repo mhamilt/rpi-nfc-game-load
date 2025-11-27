@@ -165,14 +165,6 @@ int main() {
   SDL_Renderer *renderer =
       SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  // Load font (adjust path and size)
-  TTF_Font *font =
-      TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 48);
-  if (!font) {
-    SDL_Log("Failed to load font: %s", TTF_GetError());
-    return 1;
-  }
-
   SDL_DisplayMode dm;
   if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
     printf("Desktop resolution: %dx%d\n", dm.w, dm.h);
@@ -181,11 +173,17 @@ int main() {
   windowWidth = dm.w;
   windowHeight = dm.h;
   //---------------------------------------------------------------------------
-  // Welcome Message
-
-  // Set text color
+  // Font
+  // Load font (adjust path and size)
+  TTF_Font *font =
+      TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 48);
+  if (!font) {
+    SDL_Log("Failed to load font: %s", TTF_GetError());
+    return 1;
+  }
   SDL_Color color = {255, 255, 255, 255}; // white
-
+  //---------------------------------------------------------------------------
+  // Welcome Message
   const int numLines = 4;
   const char *welcomeMessageLines[numLines] = {
       "Merry Christmas! Rowan and Sandy",
@@ -216,9 +214,6 @@ int main() {
 
   //---------------------------------------------------------------------------
   // Text
-
-  // Set text color
-  SDL_Color color = {255, 255, 255, 255}; // white
 
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
