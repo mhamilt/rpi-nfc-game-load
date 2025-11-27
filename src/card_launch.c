@@ -229,11 +229,11 @@ int main() {
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
 
-  SDL_Surface *textSurf = TTF_RenderText_Blended(font, "Hello", color);
+  SDL_Surface *textSurf = TTF_RenderText_Blended(font, gamelist[0].title, color);
   textTextures[0] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
 
-  textSurf = TTF_RenderText_Blended(font, "World", color);
+  textSurf = TTF_RenderText_Blended(font, gamelist[1].title, color);
   textTextures[1] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
 
@@ -339,7 +339,7 @@ int main() {
       //   break;
       // }
 
-      // if (value_updated) {
+      if (value_updated) {
 
       //   switch (fade_state) {
       //   case FADE_IN_END:
@@ -382,7 +382,7 @@ int main() {
       //     fade_state = FADE_IN;
       //     break;
       //   }
-      // }
+      }
 
       SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
       SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
