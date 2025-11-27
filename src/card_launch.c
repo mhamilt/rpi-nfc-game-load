@@ -206,7 +206,7 @@ int main() {
 
     int texw;
     int texh;
-    SDL_QueryTexture(currentTexture, NULL, NULL, &texw, &texh);
+    SDL_QueryTexture(welcomeMessageTextures[i], NULL, NULL, &texw, &texh);
     welcomeMessageDest[i].x = (windowWidth - texw) / 2;
     welcomeMessageDest[i].y = 0 + i * texh;
     welcomeMessageDest[i].w = texw;
