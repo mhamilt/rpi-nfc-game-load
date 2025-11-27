@@ -1,5 +1,5 @@
 CC = gcc
-DLIBS = -lwiringPi -lSDL2 -lSDL2_ttf
+DLIBS = -lwiringPi -lSDL2 -lSDL2_ttf -pthread
 INC_DIR = ./pn532/
 SRCS = $(wildcard *.c)
 all: $(SRCS:.c=.exe)
