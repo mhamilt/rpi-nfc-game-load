@@ -42,7 +42,13 @@ typedef enum {
 } FADE_STATE;
 
 FADE_STATE fade_state = NO_FADE;
-
+//-----------------------------------------------------------------------------
+typedef enum {
+  WELCOME_MESSAGE,
+  SHOW_GAME,
+} MENU_STATE;
+MENU_STATE menu_state = WELCOME_MESSAGE;
+//-----------------------------------------------------------------------------
 uint32_t windowHeight = 600;
 uint32_t windowWidth = 800;
 
@@ -175,6 +181,40 @@ int main() {
   windowWidth = dm.w;
   windowHeight = dm.h;
   //---------------------------------------------------------------------------
+  // Welcome Message
+
+  // Set text color
+  SDL_Color color = {255, 255, 255, 255}; // white
+
+  const int numLines = 4;
+  const char *welcomeMessageLines[numLines] = {
+      "Merry Christmas! Rowan and Sandy",
+      "Love from Mummy and Daddy",
+      "",
+      "Insert a Card To Play",
+  };
+
+  SDL_Texture *welcomeMessageTextures[numLines];
+  SDL_Rect welcomeMessageDest[numLines];
+  welcomeMessageDest[0].x = 0; // X position on screen
+  welcomeMessageDest[0].y = 0; // Y position on screen
+  for (int i = 0; i < numLines; i++) {
+
+    SDL_Surface *welcomeMessageSurface =
+        TTF_RenderText_Blended(font, welcomeMessageLines[i], color);
+    welcomeMessageTextures[i] =
+        SDL_CreateTextureFromSurface(renderer, welcomeMessageSurface);
+    SDL_FreeSurface(welcomeMessageSurface);
+
+    SDL_QueryTexture(currentTexture, NULL, NULL, &welcomeMessageDest[i].w,
+                     &welcomeMessageDest[i].h);
+    welcomeMessageDest[i].x = (windowWidth - welcomeMessageDest[i].w) / 2;
+    welcomeMessageDest[i].y = 0 + i * welcomeMessageDest.h;
+    // welcomeMessageDest[i].y = ((windowHeight - welcomeMessageDest.h) / 2) + i
+    // * welcomeMessageDest.h;
+  }
+
+  //---------------------------------------------------------------------------
   // Text
 
   // Set text color
@@ -261,73 +301,88 @@ int main() {
       }
     }
 
-    switch (fade_state) {
+    SDL_RenderClear(renderer);
 
-      // use SDL_GetTicks for a consistent duration
-    case FADE_IN:
-      alpha += alphaStep;
-      if (alpha >= 255) {
-        alpha = 255;
-        fade_state = FADE_IN_END;
-      }
-      SDL_SetTextureAlphaMod(currentTexture, alpha);
-      SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
-      break;
-    case FADE_OUT:
-      alpha -= alphaStep;
-      if (alpha <= 0) {
-        alpha = 0;
-        fade_state = FADE_OUT_END;
-      }
-      SDL_SetTextureAlphaMod(currentTexture, alpha);
-      SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
-      break;
-    }
+    switch (menu_state) {
+    case WELCOME_MESSAGE:
 
-    if (value_updated) {
+      for (int i = 0; i < numLines; i++)
+        SDL_RenderCopy(renderer, welcomeMessageTexture[i], NULL,
+                       &welcomeMessageDest[i]);
+
+      break;
 
       switch (fade_state) {
-      case FADE_IN_END:
-        if (swapTexture) {
 
-          uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-          sprintf(displayText, "%X", print_value);
-          textSurf = TTF_RenderText_Blended(font, displayText, color);
-
-          if (textTextures[swapTextureIndex])
-            SDL_DestroyTexture(textTextures[swapTextureIndex]);
-
-          textTextures[swapTextureIndex] =
-              SDL_CreateTextureFromSurface(renderer, textSurf);
-          SDL_FreeSurface(textSurf);
-
-          swapTexture = 0;
-          fade_state = FADE_OUT;
+        // use SDL_GetTicks for a consistent duration
+      case FADE_IN:
+        alpha += alphaStep;
+        if (alpha >= 255) {
+          alpha = 255;
+          fade_state = FADE_IN_END;
         }
+        SDL_SetTextureAlphaMod(currentTexture, alpha);
+        SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
         break;
-      case FADE_OUT_END:
-        textureIndex = (textureIndex == 1) ? 0 : 1;
-        currentTexture = textTextures[textureIndex];
-        currentCoverTexture = coverTextures[textureIndex];
-        SDL_SetTextureAlphaMod(currentTexture, 0);
-        SDL_SetTextureAlphaMod(currentCoverTexture, 0);
-        SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
-        coverDest.x =
-            (windowWidth - imgW[textureIndex]) / 2; // X position on screen
-        coverDest.y =
-            (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
-        coverDest.w = imgW[textureIndex];            // Width to draw
-        coverDest.h = imgH[textureIndex];            // Height to draw
-
-        value_updated = 0;
-        fade_state = FADE_IN;
+      case FADE_OUT:
+        alpha -= alphaStep;
+        if (alpha <= 0) {
+          alpha = 0;
+          fade_state = FADE_OUT_END;
+        }
+        SDL_SetTextureAlphaMod(currentTexture, alpha);
+        SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
         break;
       }
-    }
 
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
-    SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
+      if (value_updated) {
+
+        switch (fade_state) {
+        case FADE_IN_END:
+          if (swapTexture) {
+
+            uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
+            sprintf(displayText, "%X", print_value);
+            textSurf = TTF_RenderText_Blended(font, displayText, color);
+
+            if (textTextures[swapTextureIndex])
+              SDL_DestroyTexture(textTextures[swapTextureIndex]);
+
+            textTextures[swapTextureIndex] =
+                SDL_CreateTextureFromSurface(renderer, textSurf);
+            SDL_FreeSurface(textSurf);
+
+            swapTexture = 0;
+            fade_state = FADE_OUT;
+          }
+          break;
+        case FADE_OUT_END:
+          textureIndex = (textureIndex == 1) ? 0 : 1;
+          currentTexture = textTextures[textureIndex];
+          currentCoverTexture = coverTextures[textureIndex];
+          SDL_SetTextureAlphaMod(currentTexture, 0);
+          SDL_SetTextureAlphaMod(currentCoverTexture, 0);
+          SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
+                           &textDest.h);
+          coverDest.x =
+              (windowWidth - imgW[textureIndex]) / 2; // X position on screen
+          coverDest.y =
+              (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
+          coverDest.w = imgW[textureIndex];            // Width to draw
+          coverDest.h = imgH[textureIndex];            // Height to draw
+
+          value_updated = 0;
+          fade_state = FADE_IN;
+          break;
+        }
+      }
+
+      SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
+      SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
+
+    case SHOW_GAME:
+      break;
+    }
     SDL_RenderPresent(renderer);
   }
   //---------------------------------------------------------------------------
