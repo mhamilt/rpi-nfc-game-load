@@ -315,7 +315,6 @@ int main() {
       break;
 
       switch (fade_state) {
-
         // use SDL_GetTicks for a consistent duration
       case FADE_IN:
         alpha += alphaStep;
@@ -366,7 +365,7 @@ int main() {
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
           SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
-          textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
+          // textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
           coverDest.x =
               (windowWidth - imgW[textureIndex]) / 2; // X position on screen
           coverDest.y =
@@ -403,16 +402,16 @@ int main() {
   //---------------------------------------------------------------------------
   // SDL Teardown
   // Hide cursor
-  system("setterm -cursor off");
+  // system("setterm -cursor off");
 
-  // Make background black
-  system("setterm -blank force");
+  // // Make background black
+  // system("setterm -blank force");
 
-  // Clear the console fully
-  system("clear > /dev/tty1");
+  // // Clear the console fully
+  // system("clear > /dev/tty1");
 
-  // Disable kernel messages to console
-  system("dmesg -n 1");
+  // // Disable kernel messages to console
+  // system("dmesg -n 1");
 
   SDL_DestroyTexture(textTextures[0]);
   SDL_DestroyTexture(textTextures[1]);
@@ -424,13 +423,13 @@ int main() {
   TTF_Quit();
   SDL_Quit();
   //---------------------------------------------------------------------------
-  system("stty sane");
-  //---------------------------------------------------------------------------
-  int gameNum = textureIndex;
-  sprintf(system_command, system_command_format, gamelist[gameNum].console,
-          gamelist[gameNum].console, gamelist[gameNum].filename);
-  printf("%s\n", system_command);
-  system(system_command);
+  // system("stty sane");
+  // //---------------------------------------------------------------------------
+  // int gameNum = textureIndex;
+  // sprintf(system_command, system_command_format, gamelist[gameNum].console,
+  //         gamelist[gameNum].console, gamelist[gameNum].filename);
+  // printf("%s\n", system_command);
+  // system(system_command);
   //---------------------------------------------------------------------------
   return 0;
 }
