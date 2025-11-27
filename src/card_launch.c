@@ -307,7 +307,7 @@ int main() {
     case WELCOME_MESSAGE:
 
       for (int i = 0; i < numLines; i++)
-        SDL_RenderCopy(renderer, welcomeMessageTexture[i], NULL,
+        SDL_RenderCopy(renderer, welcomeMessageTextures[i], NULL,
                        &welcomeMessageDest[i]);
 
       break;
