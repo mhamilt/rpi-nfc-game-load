@@ -229,7 +229,8 @@ int main() {
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
 
-  SDL_Surface *textSurf = TTF_RenderText_Blended(font, gamelist[0].title, color);
+  SDL_Surface *textSurf =
+      TTF_RenderText_Blended(font, gamelist[0].title, color);
   textTextures[0] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
 
@@ -368,15 +369,12 @@ int main() {
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
           SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
-          // textDest.x = (windowWidth - textDest.w) / 2; // X position on
-          // screen
-          coverDest.x =
-              (windowWidth - imgW[textureIndex]) / 2; // X position on screen
-          coverDest.y =
-              (windowHeight - imgH[textureIndex]) / 2; // Y position on
-              screen
-          coverDest.w = imgW[textureIndex];            // Width to draw
-          coverDest.h = imgH[textureIndex];            // Height to draw
+                           
+          textDest.x = (windowWidth - textDest.w) / 2;
+          coverDest.x = (windowWidth - imgW[textureIndex]) / 2;
+          coverDest.y = (windowHeight - imgH[textureIndex]) / 2;
+          coverDest.w = imgW[textureIndex];
+          coverDest.h = imgH[textureIndex];
 
           value_updated = 0;
           fade_state = FADE_IN;
