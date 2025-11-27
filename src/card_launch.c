@@ -14,14 +14,17 @@ typedef struct {
   uint8_t card_id[4];
   const char *console;
   const char *filename;
+  const char *title;
 } Game;
 //-----------------------------------------------------------------------------
 Game gamelist[] = {
     {.card_id = {0X4B, 0xEB, 0x08, 0x25},
      .console = "nes",
+     .title = "Teenage Mutant Ninja Turtles",
      .filename = "turtles.nes"},
     {.card_id = {0x80, 0xc4, 0x93, 0x97},
      .console = "nes",
+     .title = "The Great Gatsby",
      .filename = "gatsby.nes"},
 };
 
@@ -236,13 +239,10 @@ int main() {
   SDL_Texture *currentTexture = textTextures[textureIndex];
 
   SDL_Rect textDest;
-  textDest.x = 0;   // X position on screen
-  textDest.y = 0;   // Y position on screen
-  textDest.w = 100; // Width to draw
-  textDest.h = 100; // Height to draw
 
   SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
-
+  textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
+  textDest.y = 4 * windowHeight / 5;           // Y position on screen
   //---------------------------------------------------------------------------
   // Cover Art
   // Load the BMP file
@@ -287,7 +287,7 @@ int main() {
   SDL_Event e;
   int running = 1;
 
-  char displayText[10];
+  char displayText[40];
 
   uint16_t alpha = 0;
   uint8_t alphaStep = 5;
@@ -344,7 +344,7 @@ int main() {
           if (swapTexture) {
 
             uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-            sprintf(displayText, "%X", print_value);
+            sprintf(displayText, "%s", gamelist[textureIndex]);
             textSurf = TTF_RenderText_Blended(font, displayText, color);
 
             if (textTextures[swapTextureIndex])
@@ -366,6 +366,7 @@ int main() {
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
           SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
+          textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
           coverDest.x =
               (windowWidth - imgW[textureIndex]) / 2; // X position on screen
           coverDest.y =
