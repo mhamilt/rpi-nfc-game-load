@@ -347,7 +347,7 @@ int main() {
           if (swapTexture) {
 
             uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-            sprintf(gameTitleText, "%s", gamelist[textureIndex].title);
+            sprintf(gameTitleText, "%s", gamelist[swapTextureIndex].title);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
 
             if (textTextures[swapTextureIndex])
@@ -369,7 +369,7 @@ int main() {
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
           SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
-                           
+
           textDest.x = (windowWidth - textDest.w) / 2;
           coverDest.x = (windowWidth - imgW[textureIndex]) / 2;
           coverDest.y = (windowHeight - imgH[textureIndex]) / 2;
