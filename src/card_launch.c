@@ -180,6 +180,8 @@ int main() {
     printf("Desktop resolution: %dx%d\n", dm.w, dm.h);
   }
 
+  SDL_ShowCursor(SDL_DISABLE);
+  
   windowWidth = dm.w;
   windowHeight = dm.h;
   //---------------------------------------------------------------------------
