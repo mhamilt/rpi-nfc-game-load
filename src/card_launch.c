@@ -98,9 +98,12 @@ void *poll_card_reader(void *arg) {
         PN532_ReadPassiveTarget(&pn532, uid, PN532_MIFARE_ISO14443A, 1000);
 
     if (uid_len != PN532_STATUS_ERROR) {
-
-      cardFound = 1;
-      shared_value = *(uint32_t *)uid;
+      if (menu_state == WELCOME_MESSAGE) {
+        menu_state = SHOW_GAME;
+      } else {
+        cardFound = 1;
+        shared_value = *(uint32_t *)uid;
+      }
     }
 
     pthread_mutex_unlock(&lock); // unlock after modifying
@@ -121,16 +124,13 @@ void *print_result(void *arg) {
     pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
 
-      if (menu_state == WELCOME_MESSAGE) {
-        menu_state = SHOW_GAME;
-      } else {
-        sprintf(resultText, resultTextFormat, shared_value);
-        printf("%s\n\r", resultText);
-        prev_value = shared_value;
-        print_value = shared_value;
-        value_updated = 1;
-        swapTexture = 1;
-      }
+      sprintf(resultText, resultTextFormat, shared_value);
+      printf("%s\n\r", resultText);
+      prev_value = shared_value;
+      print_value = shared_value;
+      value_updated = 1;
+      swapTexture = 1;
+
       cardFound = 0;
     }
     pthread_mutex_unlock(&lock); // unlock after accessing
