@@ -119,9 +119,9 @@ void *print_result(void *arg) {
     pthread_mutex_lock(&lock); // lock before accessing
     if (cardFound && prev_value != shared_value) {
 
-      if (menu_state == WELCOME_MESSAGE)
-        menu_state = SHOW_GAME;
-      else {
+      if (menu_state == WELCOME_MESSAGE) {
+        menu_state = SHOW_GAME;      
+      } else {
         sprintf(resultText, resultTextFormat, shared_value);
         printf("%s\n\r", resultText);
         prev_value = shared_value;
