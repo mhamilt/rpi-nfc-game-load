@@ -215,7 +215,7 @@ int main() {
     int texh;
     SDL_QueryTexture(welcomeMessageTextures[i], NULL, NULL, &texw, &texh);
     welcomeMessageDest[i].x = (windowWidth - texw) / 2;
-    welcomeMessageDest[i].y = 0 + i * texh;
+    welcomeMessageDest[i].y = (windowHeight/2)+ (texh * (i  - 1));
     welcomeMessageDest[i].w = texw;
     welcomeMessageDest[i].h = texh;
     // welcomeMessageDest[i].y = ((windowHeight - welcomeMessageDest.h) / 2) + i
