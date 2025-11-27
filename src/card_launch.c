@@ -204,10 +204,13 @@ int main() {
         SDL_CreateTextureFromSurface(renderer, welcomeMessageSurface);
     SDL_FreeSurface(welcomeMessageSurface);
 
-    SDL_QueryTexture(currentTexture, NULL, NULL, &welcomeMessageDest[i].w,
-                     &welcomeMessageDest[i].h);
-    welcomeMessageDest[i].x = (windowWidth - welcomeMessageDest[i].w) / 2;
-    welcomeMessageDest[i].y = 0 + i * welcomeMessageDest.h;
+    int texw;
+    int texh;
+    SDL_QueryTexture(currentTexture, NULL, NULL, &texw, &texh);
+    welcomeMessageDest[i].x = (windowWidth - texw) / 2;
+    welcomeMessageDest[i].y = 0 + i * texh;
+    welcomeMessageDest[i].w = texw;
+    welcomeMessageDest[i].h = texh;
     // welcomeMessageDest[i].y = ((windowHeight - welcomeMessageDest.h) / 2) + i
     // * welcomeMessageDest.h;
   }
