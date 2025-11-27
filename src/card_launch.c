@@ -215,7 +215,7 @@ int main() {
     int texh;
     SDL_QueryTexture(welcomeMessageTextures[i], NULL, NULL, &texw, &texh);
     welcomeMessageDest[i].x = (windowWidth - texw) / 2;
-    welcomeMessageDest[i].y = (windowHeight/2)+ (texh * (i  - 1));
+    welcomeMessageDest[i].y = (windowHeight / 2) + (texh * (i - 1));
     welcomeMessageDest[i].w = texw;
     welcomeMessageDest[i].h = texh;
     // welcomeMessageDest[i].y = ((windowHeight - welcomeMessageDest.h) / 2) + i
@@ -314,6 +314,8 @@ int main() {
 
       break;
 
+    case SHOW_GAME:
+
       switch (fade_state) {
         // use SDL_GetTicks for a consistent duration
       case FADE_IN:
@@ -365,7 +367,8 @@ int main() {
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
           SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
-          // textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
+          // textDest.x = (windowWidth - textDest.w) / 2; // X position on
+          // screen
           coverDest.x =
               (windowWidth - imgW[textureIndex]) / 2; // X position on screen
           coverDest.y =
@@ -381,8 +384,6 @@ int main() {
 
       SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
       SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
-
-    case SHOW_GAME:
       break;
     }
     SDL_RenderPresent(renderer);
