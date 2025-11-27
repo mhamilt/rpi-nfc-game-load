@@ -59,6 +59,7 @@ volatile uint32_t shared_value = 0;
 volatile uint32_t prev_value = 1;
 volatile uint8_t searchingForCard = 1;
 volatile uint8_t cardFound = 0;
+volatile uint8_t cardReaderReady = 0;
 pthread_mutex_t lock; // mutex to protect access
 
 uint32_t print_value = 0;
@@ -84,6 +85,7 @@ void *poll_card_reader(void *arg) {
 
   PN532_SamConfiguration(&pn532);
   printf("Waiting for RFID/NFC card...\r\n");
+  cardReaderReady = 1;
 
   SDL_DisplayMode dm;
   if (SDL_GetDesktopDisplayMode(0, &dm) == 0) {
@@ -120,7 +122,7 @@ void *print_result(void *arg) {
     if (cardFound && prev_value != shared_value) {
 
       if (menu_state == WELCOME_MESSAGE) {
-        menu_state = SHOW_GAME;      
+        menu_state = SHOW_GAME;
       } else {
         sprintf(resultText, resultTextFormat, shared_value);
         printf("%s\n\r", resultText);
@@ -310,9 +312,14 @@ int main() {
     switch (menu_state) {
     case WELCOME_MESSAGE:
 
-      for (int i = 0; i < numLines; i++)
+      for (int i = 0; i < numLines - 1; i++) {
         SDL_RenderCopy(renderer, welcomeMessageTextures[i], NULL,
                        &welcomeMessageDest[i]);
+      }
+      if (cardReaderReady) {
+        SDL_RenderCopy(renderer, welcomeMessageTextures[numLines - 1], NULL,
+                       &welcomeMessageDest[numLines - 1]);
+      }
 
       break;
 
