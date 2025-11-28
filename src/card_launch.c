@@ -308,8 +308,8 @@ int main() {
 
   char gameTitleText[40];
 
-  uint32_t alpha = 0;
-  uint32_t alphaStep = 10;
+  uint16_t alpha = 0;
+  uint8_t alphaStep = 10;
   
   FADE_STATE fade_state = FADE_IN;
 
