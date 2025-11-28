@@ -376,16 +376,15 @@ int main() {
           case SNES_BUTTON_RIGHT:
             break;
           }
-          printf("%d, %s: Game Number %d/%d Title: %s\n", e.cbutton.button,
+          printf("%d, %s: Game Number %d/%d\n", e.cbutton.button,
                  SDL_GameControllerGetStringForButton(e.cbutton.button),
-                 selectionIndex, numGames, gamelist[selectionIndex].title);
+                 selectionIndex, numGames);
           break;
         }
         //-----------------------------------------------------------------------
         break;
       }
     }
-
     SDL_RenderClear(renderer);
 
     switch (menu_state) {
@@ -433,10 +432,11 @@ int main() {
           if (swapTexture) {
 
             swapIndex = (swapIndex == 1) ? 0 : 1;
+            // swap text
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
+            printf("%s",gameTitleText);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
 
-            // swap text
             if (textTextures[swapIndex])
               SDL_DestroyTexture(textTextures[swapIndex]);
 
