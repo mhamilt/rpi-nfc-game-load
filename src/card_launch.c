@@ -332,10 +332,10 @@ int main_menu(char *system_command) {
     while (SDL_PollEvent(&e)) {
       //-----------------------------------------------------------------------
       switch (e.type) {
-      case SDL_QUIT:
-        run_menu = 0;
+      case SDL_QUIT:        
       case SDL_KEYDOWN:
         running = 0;
+        run_menu = 0;
         break;
       //-----------------------------------------------------------------------
       // Controller Behaviour
@@ -543,10 +543,10 @@ int main_menu(char *system_command) {
   TTF_Quit();
   SDL_Quit();
   //---------------------------------------------------------------------------
-  // swap to clean tty2
-  system("chvt 2");
-  system("setterm -cursor off");
-  system("clear > /dev/tty2");
+  // // swap to clean tty2
+  // system("chvt 2");
+  // system("setterm -cursor off");
+  // system("clear > /dev/tty2");
   const char *system_command_format =
       "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s "
       "/home/pi/RetroPie/roms/%s/%s";
