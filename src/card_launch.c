@@ -28,6 +28,9 @@ typedef enum {
 } MENU_STATE;
 MENU_STATE menu_state = WELCOME_MESSAGE;
 //-----------------------------------------------------------------------------
+// Used for if the menu should re-enter its loop
+uint8_t run_menu = 1;
+//-----------------------------------------------------------------------------
 uint32_t windowHeight = 600;
 uint32_t windowWidth = 800;
 
@@ -119,7 +122,7 @@ void *print_result(void *arg) {
 int main_menu();
 //-----------------------------------------------------------------------------
 int main() {
-  while (1) {
+  while (run_menu) {
     const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                        "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
     char system_command[sizeof(path) + 200];
@@ -330,6 +333,7 @@ int main_menu(char *system_command) {
       //-----------------------------------------------------------------------
       switch (e.type) {
       case SDL_QUIT:
+        run_menu = 0;
       case SDL_KEYDOWN:
         running = 0;
         break;
