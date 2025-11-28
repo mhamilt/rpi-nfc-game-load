@@ -344,11 +344,45 @@ int main() {
           menu_state = SHOW_GAME;
           break;
         case SHOW_GAME:
-        
-          printf("%d, %s\n",e.cbutton.button, SDL_GameControllerGetStringForButton(e.cbutton.button));
+          switch ((SNES_CONTROLLER_BUTTON)e.cbutton.button) {
+          case SNES_BUTTON_A:
+            break;
+          case SNES_BUTTON_B:
+            break;
+          case SNES_BUTTON_Y:
+            break;
+          case SNES_BUTTON_X:
+            break;
+          case SNES_BUTTON_SELECT:
+            break;
+          case SNES_BUTTON_5:
+            break;
+          case SNES_BUTTON_START:
+            break;
+          case SNES_BUTTON_6:
+            break;
+          case SNES_BUTTON_7:
+            break;
+          case SNES_BUTTON_8:
+            break;
+          case SNES_BUTTON_LEFT_TRIG:
+            break;
+          case SNES_BUTTON_RIGHT_TRIG:
+            break;
+          case SNES_BUTTON_UP:
+            break;
+          case SNES_BUTTON_DOWN:
+            break;
+          case SNES_BUTTON_LEFT:
+            break;
+          case SNES_BUTTON_RIGHT:
+            break;
+          }
+          printf("%d, %s\n", e.cbutton.button,
+                 SDL_GameControllerGetStringForButton(e.cbutton.button));
           break;
         }
-      //-----------------------------------------------------------------------
+        //-----------------------------------------------------------------------
         break;
       }
     }
