@@ -434,7 +434,7 @@ int main() {
             swapIndex = (swapIndex == 1) ? 0 : 1;
             // swap text
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
-            printf("%s",gameTitleText);
+            printf("%s\n",gameTitleText);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
 
             if (textTextures[swapIndex])
