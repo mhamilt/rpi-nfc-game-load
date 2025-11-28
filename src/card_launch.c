@@ -345,8 +345,6 @@ int main() {
             break;
           case SNES_BUTTON_START:
             break;
-          case SNES_BUTTON_6:
-            break;
           case SNES_BUTTON_7:
             break;
           case SNES_BUTTON_8:
@@ -433,13 +431,32 @@ int main() {
             swapIndex = (swapIndex == 1) ? 0 : 1;
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
-
+            
+            // swap text
             if (textTextures[swapIndex])
               SDL_DestroyTexture(textTextures[swapIndex]);
 
             textTextures[swapIndex] =
                 SDL_CreateTextureFromSurface(renderer, textSurf);
             SDL_FreeSurface(textSurf);
+
+            // swap cover
+            sprintf(coverPath, coverPathFormat,
+                    gamelist[selectionIndex].console,
+                    gamelist[selectionIndex].cover);
+            coverSurface = SDL_LoadBMP(coverPath);
+            if (!coverSurface) {
+              SDL_Log("Failed to load BMP: %s", SDL_GetError());
+              return 1;
+            }
+
+            // Convert surface to texture
+            imgW[swapIndex] = coverSurface->w;
+            imgH[swapIndex] = coverSurface->h;
+            coverTextures[swapIndex];
+            = SDL_CreateTextureFromSurface(renderer, coverSurface);
+            SDL_SetTextureBlendMode(coverTextures[swapIndex], SDL_BLENDMODE_BLEND);
+            SDL_FreeSurface(coverSurface);
 
             swapTexture = 0;
             fade_state = FADE_OUT;
