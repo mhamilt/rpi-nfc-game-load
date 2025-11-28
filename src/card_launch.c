@@ -303,14 +303,22 @@ int main() {
 
   currentCoverTexture = coverTextures[selectionIndex];
   //---------------------------------------------------------------------------
+  // Fade Timing
+  uint32_t fadeTimeMs = 500;
+  uint32_t fadeStartTime = SDL_GetTicks();
+  uint32_t fadePrevTime = SDL_GetTicks();
+  uint32_t alphaStep;
+  
+  fadePrevTime = 100;
 
+  //---------------------------------------------------------------------------
   SDL_Event e;
   int running = 1;
 
   char gameTitleText[40];
 
-  uint16_t alpha = 0;
-  uint8_t alphaStep = 5;
+  uint32_t alpha = 0;
+  
   FADE_STATE fade_state = FADE_IN;
 
   while (running) {
@@ -402,9 +410,10 @@ int main() {
 
     case SHOW_GAME:
 
-      switch (fade_state) {
-        // use SDL_GetTicks for a consistent duration
+      switch (fade_state) {        
       case FADE_IN:
+        alphaStep = 255 * (SDL_GetTicks()- fadePrevTime) / fadeTimeMs;
+        fadePrevTime = SDL_GetTicks();
         alpha += alphaStep;
         if (alpha >= 255) {
           alpha = 255;
@@ -414,6 +423,8 @@ int main() {
         SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
         break;
       case FADE_OUT:
+        alphaStep = 255 * (SDL_GetTicks()- fadePrevTime) / fadeTimeMs;
+        fadePrevTime = SDL_GetTicks();
         alpha -= alphaStep;
         if (alpha <= 0) {
           alpha = 0;
