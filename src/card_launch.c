@@ -237,7 +237,7 @@ int main() {
 
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
-  uint8_t selectionIndex = 0;
+  int8_t selectionIndex = 0;
   uint8_t nextselectionIndex = 0;
 
   SDL_Surface *textSurf =
