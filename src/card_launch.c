@@ -453,7 +453,7 @@ int main() {
             // Convert surface to texture
             imgW[swapIndex] = coverSurface->w;
             imgH[swapIndex] = coverSurface->h;
-            coverTextures[swapIndex];
+            coverTextures[swapIndex]
             = SDL_CreateTextureFromSurface(renderer, coverSurface);
             SDL_SetTextureBlendMode(coverTextures[swapIndex], SDL_BLENDMODE_BLEND);
             SDL_FreeSurface(coverSurface);
