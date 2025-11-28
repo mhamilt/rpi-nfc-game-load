@@ -48,7 +48,7 @@ pthread_mutex_t lock; // mutex to protect access
 uint32_t print_value = 0;
 uint8_t value_updated = 0;
 uint8_t swapTexture = 0;
-uint8_t swapTextureIndex = 0;
+uint8_t swapIndex = 0;
 const char *resultTextFormat = "%x";
 char resultText[40];
 //-----------------------------------------------------------------------------
