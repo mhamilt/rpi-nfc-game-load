@@ -151,9 +151,9 @@ int main() {
   // SDL Setup
 
   // Avoid keystrokes being sent to the terminal
-  system("setterm -cursor off");
-  system("setterm -blank force");
-  system("clear > /dev/tty1");
+  // system("setterm -cursor off");
+  // system("setterm -blank force");
+  // system("clear > /dev/tty1");
 
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
   TTF_Init();
