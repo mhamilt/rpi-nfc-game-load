@@ -350,18 +350,22 @@ int main() {
           case SNES_BUTTON_8:
             break;
           case SNES_BUTTON_LEFT_TRIG:
-            selectionIndex--;
-            if (selectionIndex < 0)
-              selectionIndex += numGames;
-            value_updated = 1;
-            swapTexture = 1;
+            if (!value_updated) {
+              selectionIndex--;
+              if (selectionIndex < 0)
+                selectionIndex += numGames;
+              value_updated = 1;
+              swapTexture = 1;
+            }
             break;
           case SNES_BUTTON_RIGHT_TRIG:
-            selectionIndex++;
-            if (selectionIndex >= numGames)
-              selectionIndex -= numGames;
-            value_updated = 1;
-            swapTexture = 1;
+            if (!value_updated) {
+              selectionIndex++;
+              if (selectionIndex >= numGames)
+                selectionIndex -= numGames;
+              value_updated = 1;
+              swapTexture = 1;
+            }
             break;
           case SNES_BUTTON_UP:
             break;
@@ -431,7 +435,7 @@ int main() {
             swapIndex = (swapIndex == 1) ? 0 : 1;
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
-            
+
             // swap text
             if (textTextures[swapIndex])
               SDL_DestroyTexture(textTextures[swapIndex]);
@@ -450,12 +454,13 @@ int main() {
               SDL_Log("Failed to load BMP: %s", SDL_GetError());
               return 1;
             }
-            
+
             imgW[swapIndex] = coverSurface->w;
             imgH[swapIndex] = coverSurface->h;
-            coverTextures[swapIndex]
-            = SDL_CreateTextureFromSurface(renderer, coverSurface);
-            SDL_SetTextureBlendMode(coverTextures[swapIndex], SDL_BLENDMODE_BLEND);
+            coverTextures[swapIndex] =
+                SDL_CreateTextureFromSurface(renderer, coverSurface);
+            SDL_SetTextureBlendMode(coverTextures[swapIndex],
+                                    SDL_BLENDMODE_BLEND);
             SDL_FreeSurface(coverSurface);
 
             swapTexture = 0;
