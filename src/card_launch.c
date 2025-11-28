@@ -9,24 +9,25 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include "gamelist.h"
 //-----------------------------------------------------------------------------
-typedef struct {
-  uint8_t card_id[4];
-  const char *console;
-  const char *filename;
-  const char *title;
-} Game;
-//-----------------------------------------------------------------------------
-Game gamelist[] = {
-    {.card_id = {0X4B, 0xEB, 0x08, 0x25},
-     .console = "nes",
-     .title = "Teenage Mutant Ninja Turtles",
-     .filename = "turtles.nes"},
-    {.card_id = {0x80, 0xc4, 0x93, 0x97},
-     .console = "nes",
-     .title = "The Great Gatsby",
-     .filename = "gatsby.nes"},
-};
+// typedef struct {
+//   uint8_t card_id[4];
+//   const char *console;
+//   const char *filename;
+//   const char *title;
+// } Game;
+// //-----------------------------------------------------------------------------
+// Game gamelist[] = {
+//     {.card_id = {0X4B, 0xEB, 0x08, 0x25},
+//      .console = "nes",
+//      .title = "Teenage Mutant Ninja Turtles",
+//      .filename = "turtles.nes"},
+//     {.card_id = {0x80, 0xc4, 0x93, 0x97},
+//      .console = "nes",
+//      .title = "The Great Gatsby",
+//      .filename = "gatsby.nes"},
+// };
 
 const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                    "_SYS_ nes /home/pi/RetroPie/roms/nes/";
@@ -142,6 +143,8 @@ void *print_result(void *arg) {
 //-----------------------------------------------------------------------------
 
 int main() {
+  //---------------------------------------------------------------------------
+  // Threading
   pthread_t poll_card_reader_thread;
   pthread_t print_result_thread;
 
@@ -152,20 +155,19 @@ int main() {
   }
 
   // Create threads
-  if (pthread_create(&poll_card_reader_thread, NULL, poll_card_reader, NULL) !=
-      0) {
+  if (pthread_create(&poll_card_reader_thread, NULL, poll_card_reader, NULL)) {
     printf("Thread creation failed\n");
     return 1;
   }
 
-  if (pthread_create(&print_result_thread, NULL, print_result, NULL) != 0) {
+  if (pthread_create(&print_result_thread, NULL, print_result, NULL)) {
     printf("Thread creation failed\n");
     return 1;
   }
 
   //---------------------------------------------------------------------------
   // SDL Setup
-  SDL_Init(SDL_INIT_VIDEO);
+  SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
   TTF_Init();
 
   SDL_Window *window =
@@ -181,7 +183,7 @@ int main() {
   }
 
   SDL_ShowCursor(SDL_DISABLE);
-  
+
   windowWidth = dm.w;
   windowHeight = dm.h;
   //---------------------------------------------------------------------------
