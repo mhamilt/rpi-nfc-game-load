@@ -380,8 +380,6 @@ int main() {
             break;
           case SNES_BUTTON_DOWN:
             break;
-          case SNES_BUTTON_RIGHT:
-            break;
           }
           printf("%d, %s: Game Number %d/%d\n", e.cbutton.button,
                  SDL_GameControllerGetStringForButton(e.cbutton.button),
