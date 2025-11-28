@@ -376,9 +376,9 @@ int main() {
           case SNES_BUTTON_RIGHT:
             break;
           }
-          printf("%d, %s: Game Number %d/%d\n", e.cbutton.button,
+          printf("%d, %s: Game Number %d/%d Title:\n", e.cbutton.button,
                  SDL_GameControllerGetStringForButton(e.cbutton.button),
-                 selectionIndex, numGames);
+                 selectionIndex, numGames, gamelist[selectionIndex].title);
           break;
         }
         //-----------------------------------------------------------------------
