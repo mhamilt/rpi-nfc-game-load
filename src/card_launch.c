@@ -352,13 +352,15 @@ int main() {
           case SNES_BUTTON_8:
             break;
           case SNES_BUTTON_LEFT_TRIG:
-            if (--selectionIndex < 0)
+            selectionIndex--;
+            if (selectionIndex < 0)
               selectionIndex += numGames;
             value_updated = 1;
             swapTexture = 1;
             break;
           case SNES_BUTTON_RIGHT_TRIG:
-            if (++selectionIndex >= numGames)
+            selectionIndex++;
+            if (selectionIndex >= numGames)
               selectionIndex -= numGames;
             value_updated = 1;
             swapTexture = 1;
@@ -372,9 +374,9 @@ int main() {
           case SNES_BUTTON_RIGHT:
             break;
           }
-          printf("%d, %s: Game Number %d\n", e.cbutton.button,
+          printf("%d, %s: Game Number %d/%d\n", e.cbutton.button,
                  SDL_GameControllerGetStringForButton(e.cbutton.button),
-                 selectionIndex);
+                 selectionIndex, numGames);
           break;
         }
         //-----------------------------------------------------------------------
