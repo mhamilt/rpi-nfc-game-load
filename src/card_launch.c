@@ -1,4 +1,5 @@
 //-----------------------------------------------------------------------------
+#include "gamelist.h"
 #include "pn532.h"
 #include "pn532_rpi.h"
 #include <SDL2/SDL.h>
@@ -9,7 +10,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "gamelist.h"
 //-----------------------------------------------------------------------------
 // typedef struct {
 //   uint8_t card_id[4];
@@ -190,17 +190,25 @@ int main() {
   //---------------------------------------------------------------------------
   // SDL Controller Setup
   int num = SDL_NumJoysticks();
-    printf("Found %d joystick(s)\n", num);
+  printf("Found %d joystick(s)\n", num);
 
-    for (int i = 0; i < num; i++) {
-        if (SDL_IsGameController(i)) {
-            const char *name = SDL_GameControllerNameForIndex(i);
-            printf("Controller %d: %s\n", i, name);
-        } else {
-            const char *name = SDL_JoystickNameForIndex(i);
-            printf("Joystick  %d: %s (not a GameController)\n", i, name);
-        }
+  SDL_GameController *controller = NULL;
+  for (int i = 0; i < num; i++) {
+    if (SDL_IsGameController(i)) {
+      const char *name = SDL_GameControllerNameForIndex(i);
+      controller = SDL_GameControllerOpen(i);
+      printf("Controller %d: %s\n", i, name);
+    } else {
+      const char *name = SDL_JoystickNameForIndex(i);
+      printf("Joystick  %d: %s (not a GameController)\n", i, name);
     }
+  }
+
+  if (!controller) {
+    printf("No game controller found!\n");
+    SDL_Quit();
+    return 0;
+  }
   //---------------------------------------------------------------------------
   // Font
   // Load font (adjust path and size)
@@ -239,7 +247,7 @@ int main() {
     welcomeMessageDest[i].x = (windowWidth - texw) / 2;
     welcomeMessageDest[i].y = (windowHeight / 2) + (texh * (i - 1));
     welcomeMessageDest[i].w = texw;
-    welcomeMessageDest[i].h = texh;    
+    welcomeMessageDest[i].h = texh;
   }
 
   //---------------------------------------------------------------------------
@@ -270,7 +278,7 @@ int main() {
 
   const char *coverPathFormat = "/home/pi/RetroPie/roms/%s/covers/%s";
   char coverPath[50];
-  
+
   SDL_Texture *currentCoverTexture;
   SDL_Texture *coverTextures[2];
   sprintf(coverPath, coverPathFormat, gamelist[0].console, gamelist[0].cover);
@@ -322,10 +330,25 @@ int main() {
 
   while (running) {
     while (SDL_PollEvent(&e)) {
+      //-----------------------------------------------------------------------
       switch (e.type) {
       case SDL_QUIT:
       case SDL_KEYDOWN:
         running = 0;
+        break;
+      //-----------------------------------------------------------------------
+      // Controller Behaviour
+      case SDL_CONTROLLERBUTTONDOWN:
+        switch (menu_state) {
+        case WELCOME_MESSAGE:
+          menu_state = SHOW_GAME;
+          break;
+        case SHOW_GAME:
+        
+          printf("%s\n", SDL_GameControllerGetStringForButton(e.cbutton.button));
+          break;
+        }
+      //-----------------------------------------------------------------------
         break;
       }
     }
