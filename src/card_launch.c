@@ -149,6 +149,12 @@ int main() {
 
   //---------------------------------------------------------------------------
   // SDL Setup
+
+  // Avoid keystrokes being sent to the terminal
+  system("setterm -cursor off");
+  system("setterm -blank force");
+  system("clear > /dev/tty1");
+
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
   TTF_Init();
 
@@ -343,6 +349,7 @@ int main() {
           case SNES_BUTTON_5:
             break;
           case SNES_BUTTON_START:
+            running = 0;
             break;
           case SNES_BUTTON_7:
             break;
@@ -526,6 +533,28 @@ int main() {
   TTF_Quit();
   SDL_Quit();
   //---------------------------------------------------------------------------
+  // swap to clean tty2
+  system("chvt 2");
+  system("setterm -cursor off");
+  system("clear > /dev/tty2");
+
+  // launch emulator
+  char romPath[200];
+  sprintf(romPath, "/home/pi/RetroPie/roms/%s/%s",
+          gamelist[selectionIndex].console, gamelist[selectionIndex].filename);
+
+  pid_t pid = fork();
+  if (pid == 0) {
+    execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
+          "runcommand.sh", "0", "_SYS_", gamelist[selectionIndex].console,
+          romPath, NULL);
+    
+    perror("execl failed");
+    exit(1);
+  }
+  // Parent process: wait until emulator finishes
+  int status;
+  waitpid(pid, &status, 0);
   // system("stty sane");
   // //---------------------------------------------------------------------------
   // int gameNum = textureIndex;
