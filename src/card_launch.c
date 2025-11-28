@@ -543,24 +543,24 @@ int main() {
   sprintf(romPath, "/home/pi/RetroPie/roms/%s/%s",
           gamelist[selectionIndex].console, gamelist[selectionIndex].filename);
 
-  pid_t pid = fork();
-  if (pid == 0) {
+  // sprintf(system_command, system_command_format, gamelist[gameNum].console,
+  //         gamelist[gameNum].console, gamelist[gameNum].filename);
+  // printf("%s\n", system_command);
+  // pid_t pid = fork();
+  // if (pid == 0) {
     execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
           "runcommand.sh", "0", "_SYS_", gamelist[selectionIndex].console,
           romPath, NULL);
     
-    perror("execl failed");
-    exit(1);
-  }
+  //   perror("execl failed");
+  //   exit(1);
+  // }
   // Parent process: wait until emulator finishes
-  int status;
-  waitpid(pid, &status, 0);
-  // system("stty sane");
+  // int status;
+  // waitpid(pid, &status, 0);
+  // // system("stty sane");
   // //---------------------------------------------------------------------------
-  // int gameNum = textureIndex;
-  // sprintf(system_command, system_command_format, gamelist[gameNum].console,
-  //         gamelist[gameNum].console, gamelist[gameNum].filename);
-  // printf("%s\n", system_command);
+  
   // system(system_command);
   //---------------------------------------------------------------------------
   return 0;
