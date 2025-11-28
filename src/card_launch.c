@@ -545,7 +545,7 @@ int main() {
   //         gamelist[selectionIndex].console,
   //         gamelist[selectionIndex].filename);
 
-  printf("%s\n", system_command);
+  // printf("%s\n", system_command);
   // pid_t pid = fork();
   // if (pid == 0) {
   // execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
@@ -561,7 +561,7 @@ int main() {
   // // system("stty sane");
   // //---------------------------------------------------------------------------
 
-  // system(system_command);
+  system(system_command);
   //---------------------------------------------------------------------------
   return 0;
 }
