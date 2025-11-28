@@ -259,9 +259,8 @@ int main() {
   //---------------------------------------------------------------------------
   // Cover Art
   // Load the BMP file
-
   const char *coverPathFormat = "/home/pi/RetroPie/roms/%s/covers/%s";
-  char coverPath[50];
+  char coverPath[200];
 
   SDL_Texture *currentCoverTexture;
   SDL_Texture *coverTextures[2];
