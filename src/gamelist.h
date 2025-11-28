@@ -10,6 +10,8 @@ typedef struct {
   const char *cover;
 } Game;
 
+const uint8_t numGames = 7;
+
 Game gamelist[] = {{.card_id = {0X4B, 0xEB, 0x08, 0x25},
                     .console = "nes",
                     .title = "Teenage Mutant Ninja Turtles",

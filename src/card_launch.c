@@ -11,24 +11,6 @@
 #include <time.h>
 #include <unistd.h>
 //-----------------------------------------------------------------------------
-// typedef struct {
-//   uint8_t card_id[4];
-//   const char *console;
-//   const char *filename;
-//   const char *title;
-// } Game;
-// //-----------------------------------------------------------------------------
-// Game gamelist[] = {
-//     {.card_id = {0X4B, 0xEB, 0x08, 0x25},
-//      .console = "nes",
-//      .title = "Teenage Mutant Ninja Turtles",
-//      .filename = "turtles.nes"},
-//     {.card_id = {0x80, 0xc4, 0x93, 0x97},
-//      .console = "nes",
-//      .title = "The Great Gatsby",
-//      .filename = "gatsby.nes"},
-// };
-
 const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                    "_SYS_ nes /home/pi/RetroPie/roms/nes/";
 char system_command[sizeof(path) + 100];
@@ -66,7 +48,7 @@ pthread_mutex_t lock; // mutex to protect access
 uint32_t print_value = 0;
 uint8_t value_updated = 0;
 uint8_t swapTexture = 0;
-
+uint8_t swapTextureIndex = 0;
 const char *resultTextFormat = "%x";
 char resultText[40];
 //-----------------------------------------------------------------------------
@@ -255,6 +237,8 @@ int main() {
 
   SDL_Texture *textTextures[2];
   uint8_t textureIndex = 0;
+  uint8_t selectionIndex = 0;
+  uint8_t nextselectionIndex = 0;
 
   SDL_Surface *textSurf =
       TTF_RenderText_Blended(font, gamelist[0].title, color);
@@ -265,7 +249,7 @@ int main() {
   textTextures[1] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
 
-  SDL_Texture *currentTexture = textTextures[textureIndex];
+  SDL_Texture *currentTexture = textTextures[selectionIndex];
 
   SDL_Rect textDest;
 
@@ -311,12 +295,14 @@ int main() {
 
   // Set the display size you want
   SDL_Rect coverDest;
-  coverDest.x = (windowWidth - imgW[textureIndex]) / 2;  // X position on screen
-  coverDest.y = (windowHeight - imgH[textureIndex]) / 2; // Y position on screen
-  coverDest.w = imgW[textureIndex];                      // Width to draw
-  coverDest.h = imgH[textureIndex];                      // Height to draw
+  coverDest.x =
+      (windowWidth - imgW[selectionIndex]) / 2; // X position on screen
+  coverDest.y =
+      (windowHeight - imgH[selectionIndex]) / 2; // Y position on screen
+  coverDest.w = imgW[selectionIndex];            // Width to draw
+  coverDest.h = imgH[selectionIndex];            // Height to draw
 
-  currentCoverTexture = coverTextures[textureIndex];
+  currentCoverTexture = coverTextures[selectionIndex];
   //---------------------------------------------------------------------------
 
   SDL_Event e;
@@ -366,8 +352,16 @@ int main() {
           case SNES_BUTTON_8:
             break;
           case SNES_BUTTON_LEFT_TRIG:
+            if (--selectionIndex < 0)
+              selectionIndex += numGames;
+            value_updated = 1;
+            swapTexture = 1;
             break;
           case SNES_BUTTON_RIGHT_TRIG:
+            if (++selectionIndex >= numGames)
+              selectionIndex -= numGames;
+            value_updated = 1;
+            swapTexture = 1;
             break;
           case SNES_BUTTON_UP:
             break;
@@ -378,8 +372,9 @@ int main() {
           case SNES_BUTTON_RIGHT:
             break;
           }
-          printf("%d, %s\n", e.cbutton.button,
-                 SDL_GameControllerGetStringForButton(e.cbutton.button));
+          printf("%d, %s: Game Number %d\n", e.cbutton.button,
+                 SDL_GameControllerGetStringForButton(e.cbutton.button),
+                 selectionIndex);
           break;
         }
         //-----------------------------------------------------------------------
@@ -433,14 +428,14 @@ int main() {
         case FADE_IN_END:
           if (swapTexture) {
 
-            uint8_t swapTextureIndex = (textureIndex == 1) ? 0 : 1;
-            sprintf(gameTitleText, "%s", gamelist[swapTextureIndex].title);
+            swapIndex = (swapIndex == 1) ? 0 : 1;
+            sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
 
-            if (textTextures[swapTextureIndex])
-              SDL_DestroyTexture(textTextures[swapTextureIndex]);
+            if (textTextures[swapIndex])
+              SDL_DestroyTexture(textTextures[swapIndex]);
 
-            textTextures[swapTextureIndex] =
+            textTextures[swapIndex] =
                 SDL_CreateTextureFromSurface(renderer, textSurf);
             SDL_FreeSurface(textSurf);
 
@@ -449,7 +444,7 @@ int main() {
           }
           break;
         case FADE_OUT_END:
-          textureIndex = (textureIndex == 1) ? 0 : 1;
+          textureIndex = swapIndex;
           currentTexture = textTextures[textureIndex];
           currentCoverTexture = coverTextures[textureIndex];
           SDL_SetTextureAlphaMod(currentTexture, 0);
