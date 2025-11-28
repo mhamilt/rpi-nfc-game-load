@@ -224,9 +224,7 @@ int main() {
     welcomeMessageDest[i].x = (windowWidth - texw) / 2;
     welcomeMessageDest[i].y = (windowHeight / 2) + (texh * (i - 1));
     welcomeMessageDest[i].w = texw;
-    welcomeMessageDest[i].h = texh;
-    // welcomeMessageDest[i].y = ((windowHeight - welcomeMessageDest.h) / 2) + i
-    // * welcomeMessageDest.h;
+    welcomeMessageDest[i].h = texh;    
   }
 
   //---------------------------------------------------------------------------
@@ -254,9 +252,14 @@ int main() {
   //---------------------------------------------------------------------------
   // Cover Art
   // Load the BMP file
+
+  const char *coverPathFormat = "/home/pi/RetroPie/roms/%s/covers/%s";
+  char coverPath[50];
+  
   SDL_Texture *currentCoverTexture;
   SDL_Texture *coverTextures[2];
-  SDL_Surface *coverSurface = SDL_LoadBMP("turtles.bmp");
+  sprintf(coverPath, coverPathFormat, gamelist[0].console, gamelist[0].title);
+  SDL_Surface *coverSurface = SDL_LoadBMP(coverPath);
   if (!coverSurface) {
     SDL_Log("Failed to load BMP: %s", SDL_GetError());
     return 1;
@@ -271,7 +274,8 @@ int main() {
   SDL_SetTextureBlendMode(coverTextures[0], SDL_BLENDMODE_BLEND);
   SDL_FreeSurface(coverSurface);
 
-  coverSurface = SDL_LoadBMP("gatsby.bmp");
+  sprintf(coverPath, coverPathFormat, gamelist[1].console, gamelist[1].title);
+  coverSurface = SDL_LoadBMP(coverPath);
   if (!coverSurface) {
     SDL_Log("Failed to load BMP: %s", SDL_GetError());
     return 1;
