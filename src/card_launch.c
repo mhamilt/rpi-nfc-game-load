@@ -10,13 +10,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-//-----------------------------------------------------------------------------
-const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
-                   "_SYS_ nes /home/pi/RetroPie/roms/nes/";
-char system_command[sizeof(path) + 100];
-const char *system_command_format =
-    "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s "
-    "/home/pi/RetroPie/roms/%s/%s";
 
 //-----------------------------------------------------------------------------
 typedef enum {
@@ -537,21 +530,28 @@ int main() {
   // system("chvt 2");
   // system("setterm -cursor off");
   // system("clear > /dev/tty2");
-
+  const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
+                     "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
+  char system_command[sizeof(path) + 200];
+  const char *system_command_format =
+      "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s "
+      "/home/pi/RetroPie/roms/%s/%s";
+  sprintf(system_command, system_command_format,
+          gamelist[selectionIndex].console, gamelist[selectionIndex].console,
+          gamelist[selectionIndex].filename);
   // launch emulator
-  char romPath[200];
-  sprintf(romPath, "/home/pi/RetroPie/roms/%s/%s",
-          gamelist[selectionIndex].console, gamelist[selectionIndex].filename);
+  // char romPath[200];
+  // sprintf(romPath, "/home/pi/RetroPie/roms/%s/%s",
+  //         gamelist[selectionIndex].console,
+  //         gamelist[selectionIndex].filename);
 
-  // sprintf(system_command, system_command_format, gamelist[gameNum].console,
-  //         gamelist[gameNum].console, gamelist[gameNum].filename);
   // printf("%s\n", system_command);
   // pid_t pid = fork();
   // if (pid == 0) {
-    execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
-          "runcommand.sh", "0", "_SYS_", gamelist[selectionIndex].console,
-          romPath, NULL);
-    
+  // execl("/opt/retropie/supplementary/runcommand/runcommand.sh",
+  //       "runcommand.sh", "0", "_SYS_", gamelist[selectionIndex].console,
+  //       romPath, NULL);
+
   //   perror("execl failed");
   //   exit(1);
   // }
@@ -560,7 +560,7 @@ int main() {
   // waitpid(pid, &status, 0);
   // // system("stty sane");
   // //---------------------------------------------------------------------------
-  
+
   // system(system_command);
   //---------------------------------------------------------------------------
   return 0;
