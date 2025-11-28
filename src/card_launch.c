@@ -534,9 +534,9 @@ int main() {
   SDL_Quit();
   //---------------------------------------------------------------------------
   // swap to clean tty2
-  system("chvt 2");
-  system("setterm -cursor off");
-  system("clear > /dev/tty2");
+  // system("chvt 2");
+  // system("setterm -cursor off");
+  // system("clear > /dev/tty2");
 
   // launch emulator
   char romPath[200];
