@@ -127,7 +127,7 @@ int main() {
                        "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
     char system_command[sizeof(path) + 200];
 
-    if (main_menu(system_command) == EXIT_SUCCESS)
+    if (main_menu(system_command) == EXIT_SUCCESS && run_menu)
       system(system_command);
   }
 }
