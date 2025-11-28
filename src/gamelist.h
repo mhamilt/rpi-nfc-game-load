@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 typedef struct {
   uint8_t card_id[4];
   const char *console;
