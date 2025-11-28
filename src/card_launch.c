@@ -431,7 +431,7 @@ int main() {
         case FADE_IN_END:
           if (swapTexture) {
 
-            swapIndex = (swapIndex == 1) ? 0 : 1;
+            swapIndex = (textureIndex == 1) ? 0 : 1;
             // swap text
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
             printf("%s\n",gameTitleText);
