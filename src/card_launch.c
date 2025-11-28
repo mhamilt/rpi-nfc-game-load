@@ -138,6 +138,7 @@ int main() {
       system("clear > /dev/tty2");
       system(system_command);
       system("chvt 1");
+      system("clear > /dev/tty1");
     }
   }
 }
