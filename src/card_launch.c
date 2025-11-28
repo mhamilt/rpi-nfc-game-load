@@ -123,10 +123,11 @@ int main_menu();
 //-----------------------------------------------------------------------------
 int main() {
   while (run_menu) {
-    system("setterm -cursor off");
-    system("setterm -blank force");
+
+    system("setterm -cursor off < /dev/tty1")
+    system("setterm -blank force < /dev/tty1")    
     system("clear > /dev/tty1");
-    system("dmesg -n 1");
+    // system("dmesg -n 1");
 
     const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                        "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
