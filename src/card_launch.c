@@ -348,6 +348,7 @@ int main() {
             break;
           case SNES_BUTTON_8:
             break;
+          case SNES_BUTTON_LEFT:
           case SNES_BUTTON_LEFT_TRIG:
             if (!value_updated) {
               selectionIndex--;
@@ -357,6 +358,7 @@ int main() {
               swapTexture = 1;
             }
             break;
+          case SNES_BUTTON_RIGHT:
           case SNES_BUTTON_RIGHT_TRIG:
             if (!value_updated) {
               selectionIndex++;
@@ -369,8 +371,6 @@ int main() {
           case SNES_BUTTON_UP:
             break;
           case SNES_BUTTON_DOWN:
-            break;
-          case SNES_BUTTON_LEFT:
             break;
           case SNES_BUTTON_RIGHT:
             break;
@@ -433,7 +433,7 @@ int main() {
             swapIndex = (textureIndex == 1) ? 0 : 1;
             // swap text
             sprintf(gameTitleText, "%s", gamelist[selectionIndex].title);
-            printf("%s\n",gameTitleText);
+            printf("%s\n", gameTitleText);
             textSurf = TTF_RenderText_Blended(font, gameTitleText, color);
 
             if (textTextures[swapIndex])
