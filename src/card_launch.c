@@ -274,7 +274,7 @@ int main() {
   SDL_SetTextureBlendMode(coverTextures[0], SDL_BLENDMODE_BLEND);
   SDL_FreeSurface(coverSurface);
 
-  sprintf(coverPath, coverPathFormat, gamelist[1].console, gamelist[1].title);
+  sprintf(coverPath, coverPathFormat, gamelist[1].console, gamelist[1].cover);
   coverSurface = SDL_LoadBMP(coverPath);
   if (!coverSurface) {
     SDL_Log("Failed to load BMP: %s", SDL_GetError());
