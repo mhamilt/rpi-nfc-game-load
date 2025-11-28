@@ -119,7 +119,14 @@ void *print_result(void *arg) {
 int main_menu();
 //-----------------------------------------------------------------------------
 int main() {
-  main_menu();
+  while (1) {
+    const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
+                       "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
+    char system_command[sizeof(path) + 200];
+
+    if (main_menu(system_command))
+      system(system_command);
+  }
   // //---------------------------------------------------------------------------
   // // Threading
   // pthread_t poll_card_reader_thread;
@@ -132,7 +139,8 @@ int main() {
   // }
 
   // // Create threads
-  // if (pthread_create(&poll_card_reader_thread, NULL, poll_card_reader, NULL)) {
+  // if (pthread_create(&poll_card_reader_thread, NULL, poll_card_reader, NULL))
+  // {
   //   printf("Thread creation failed\n");
   //   return 1;
   // }
@@ -254,9 +262,9 @@ int main() {
 
   // SDL_Rect textDest;
 
-  // SDL_QueryTexture(currentTitleTexture, NULL, NULL, &textDest.w, &textDest.h);
-  // textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
-  // textDest.y = 4 * windowHeight / 5;           // Y position on screen
+  // SDL_QueryTexture(currentTitleTexture, NULL, NULL, &textDest.w,
+  // &textDest.h); textDest.x = (windowWidth - textDest.w) / 2; // X position on
+  // screen textDest.y = 4 * windowHeight / 5;           // Y position on screen
   // //---------------------------------------------------------------------------
   // // Cover Art
   // // Load the BMP file
@@ -265,9 +273,9 @@ int main() {
 
   // SDL_Texture *currentCoverTexture;
   // SDL_Texture *coverTextures[2];
-  // sprintf(coverPath, coverPathFormat, gamelist[0].console, gamelist[0].cover);
-  // SDL_Surface *coverSurface = SDL_LoadBMP(coverPath);
-  // if (!coverSurface) {
+  // sprintf(coverPath, coverPathFormat, gamelist[0].console,
+  // gamelist[0].cover); SDL_Surface *coverSurface = SDL_LoadBMP(coverPath); if
+  // (!coverSurface) {
   //   SDL_Log("Failed to load BMP: %s", SDL_GetError());
   //   return 1;
   // }
@@ -281,9 +289,9 @@ int main() {
   // SDL_SetTextureBlendMode(coverTextures[0], SDL_BLENDMODE_BLEND);
   // SDL_FreeSurface(coverSurface);
 
-  // sprintf(coverPath, coverPathFormat, gamelist[1].console, gamelist[1].cover);
-  // coverSurface = SDL_LoadBMP(coverPath);
-  // if (!coverSurface) {
+  // sprintf(coverPath, coverPathFormat, gamelist[1].console,
+  // gamelist[1].cover); coverSurface = SDL_LoadBMP(coverPath); if
+  // (!coverSurface) {
   //   SDL_Log("Failed to load BMP: %s", SDL_GetError());
   //   return 1;
   // }
@@ -532,7 +540,8 @@ int main() {
   // system("chvt 2");
   // system("setterm -cursor off");
   // system("clear > /dev/tty2");
-  // const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
+  // const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0
+  // "
   //                    "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
   // char system_command[sizeof(path) + 200];
   // const char *system_command_format =
@@ -561,7 +570,8 @@ int main() {
   // // int status;
   // // waitpid(pid, &status, 0);
   // // // system("stty sane");
-  // // //---------------------------------------------------------------------------
+  // //
+  // //---------------------------------------------------------------------------
 
   // system(system_command);
   // //---------------------------------------------------------------------------
@@ -569,10 +579,8 @@ int main() {
 }
 //-----------------------------------------------------------------------------
 
-
-int main_menu()
-{
-    //---------------------------------------------------------------------------
+int main_menu(char *system_command) {
+  //---------------------------------------------------------------------------
   // Threading
   pthread_t poll_card_reader_thread;
   pthread_t print_result_thread;
@@ -984,9 +992,6 @@ int main_menu()
   system("chvt 2");
   system("setterm -cursor off");
   system("clear > /dev/tty2");
-  const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
-                     "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
-  char system_command[sizeof(path) + 200];
   const char *system_command_format =
       "/opt/retropie/supplementary/runcommand/runcommand.sh 0 _SYS_ %s "
       "/home/pi/RetroPie/roms/%s/%s";
@@ -1014,8 +1019,6 @@ int main_menu()
   // waitpid(pid, &status, 0);
   // // system("stty sane");
   // //---------------------------------------------------------------------------
-
-  system(system_command);
   //---------------------------------------------------------------------------
   return 0;
 }
