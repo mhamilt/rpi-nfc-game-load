@@ -1,8 +1,9 @@
 typedef struct {
   uint8_t card_id[4];
   const char *console;
-  const char *filename;
   const char *title;
+  const char *filename;
+  const char *cover;
 } Game;
 
 Game gamelist[] = {
