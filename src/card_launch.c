@@ -123,12 +123,22 @@ int main_menu();
 //-----------------------------------------------------------------------------
 int main() {
   while (run_menu) {
+    system("setterm -cursor off");
+    system("setterm -blank force");
+    system("clear > /dev/tty1");
+    system("dmesg -n 1");
+
     const char *path = "/opt/retropie/supplementary/runcommand/runcommand.sh 0 "
                        "_SYS_ megadrive /home/pi/RetroPie/roms/megadrive/";
     char system_command[sizeof(path) + 200];
 
-    if (main_menu(system_command) == EXIT_SUCCESS && run_menu)
+    if (main_menu(system_command) == EXIT_SUCCESS && run_menu) {
+      system("chvt 2");
+      system("setterm -cursor off");
+      system("clear > /dev/tty2");
       system(system_command);
+      system("chvt 1");
+    }
   }
 }
 //-----------------------------------------------------------------------------
@@ -160,10 +170,6 @@ int main_menu(char *system_command) {
   // SDL Setup
 
   // Avoid keystrokes being sent to the terminal
-  // system("setterm -cursor off");
-  // system("setterm -blank force");
-  // system("clear > /dev/tty1");
-
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
   TTF_Init();
 
@@ -332,7 +338,7 @@ int main_menu(char *system_command) {
     while (SDL_PollEvent(&e)) {
       //-----------------------------------------------------------------------
       switch (e.type) {
-      case SDL_QUIT:        
+      case SDL_QUIT:
       case SDL_KEYDOWN:
         running = 0;
         run_menu = 0;
@@ -521,18 +527,6 @@ int main_menu(char *system_command) {
   printf("Final Card ID: %x\n", shared_value);
   //---------------------------------------------------------------------------
   // SDL Teardown
-  // Hide cursor
-  // system("setterm -cursor off");
-
-  // // Make background black
-  // system("setterm -blank force");
-
-  // // Clear the console fully
-  // system("clear > /dev/tty1");
-
-  // // Disable kernel messages to console
-  // system("dmesg -n 1");
-
   SDL_DestroyTexture(textTextures[0]);
   SDL_DestroyTexture(textTextures[1]);
   SDL_DestroyTexture(coverTextures[0]);
