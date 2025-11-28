@@ -345,7 +345,7 @@ int main() {
           break;
         case SHOW_GAME:
         
-          printf("%s\n", SDL_GameControllerGetStringForButton(e.cbutton.button));
+          printf("%d, %s\n", SDL_GameControllerGetStringForButton(e.cbutton.button));
           break;
         }
       //-----------------------------------------------------------------------
