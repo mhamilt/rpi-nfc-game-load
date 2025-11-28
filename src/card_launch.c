@@ -249,11 +249,11 @@ int main() {
   textTextures[1] = SDL_CreateTextureFromSurface(renderer, textSurf);
   SDL_FreeSurface(textSurf);
 
-  SDL_Texture *currentTexture = textTextures[selectionIndex];
+  SDL_Texture *currentTitleTexture = textTextures[selectionIndex];
 
   SDL_Rect textDest;
 
-  SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w, &textDest.h);
+  SDL_QueryTexture(currentTitleTexture, NULL, NULL, &textDest.w, &textDest.h);
   textDest.x = (windowWidth - textDest.w) / 2; // X position on screen
   textDest.y = 4 * windowHeight / 5;           // Y position on screen
   //---------------------------------------------------------------------------
@@ -408,7 +408,7 @@ int main() {
           alpha = 255;
           fade_state = FADE_IN_END;
         }
-        SDL_SetTextureAlphaMod(currentTexture, alpha);
+        SDL_SetTextureAlphaMod(currentTitleTexture, alpha);
         SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
         break;
       case FADE_OUT:
@@ -417,7 +417,7 @@ int main() {
           alpha = 0;
           fade_state = FADE_OUT_END;
         }
-        SDL_SetTextureAlphaMod(currentTexture, alpha);
+        SDL_SetTextureAlphaMod(currentTitleTexture, alpha);
         SDL_SetTextureAlphaMod(currentCoverTexture, alpha);
         break;
       }
@@ -438,6 +438,7 @@ int main() {
 
             textTextures[swapIndex] =
                 SDL_CreateTextureFromSurface(renderer, textSurf);
+
             SDL_FreeSurface(textSurf);
 
             // swap cover
@@ -449,8 +450,7 @@ int main() {
               SDL_Log("Failed to load BMP: %s", SDL_GetError());
               return 1;
             }
-
-            // Convert surface to texture
+            
             imgW[swapIndex] = coverSurface->w;
             imgH[swapIndex] = coverSurface->h;
             coverTextures[swapIndex]
@@ -464,11 +464,11 @@ int main() {
           break;
         case FADE_OUT_END:
           textureIndex = swapIndex;
-          currentTexture = textTextures[textureIndex];
+          currentTitleTexture = textTextures[textureIndex];
           currentCoverTexture = coverTextures[textureIndex];
-          SDL_SetTextureAlphaMod(currentTexture, 0);
+          SDL_SetTextureAlphaMod(currentTitleTexture, 0);
           SDL_SetTextureAlphaMod(currentCoverTexture, 0);
-          SDL_QueryTexture(currentTexture, NULL, NULL, &textDest.w,
+          SDL_QueryTexture(currentTitleTexture, NULL, NULL, &textDest.w,
                            &textDest.h);
 
           textDest.x = (windowWidth - textDest.w) / 2;
@@ -483,7 +483,7 @@ int main() {
         }
       }
 
-      SDL_RenderCopy(renderer, currentTexture, NULL, &textDest);
+      SDL_RenderCopy(renderer, currentTitleTexture, NULL, &textDest);
       SDL_RenderCopy(renderer, currentCoverTexture, NULL, &coverDest);
       break;
     }
