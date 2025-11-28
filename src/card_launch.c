@@ -186,6 +186,21 @@ int main() {
 
   windowWidth = dm.w;
   windowHeight = dm.h;
+
+  //---------------------------------------------------------------------------
+  // SDL Controller Setup
+  int num = SDL_NumJoysticks();
+    printf("Found %d joystick(s)\n", num);
+
+    for (int i = 0; i < num; i++) {
+        if (SDL_IsGameController(i)) {
+            const char *name = SDL_GameControllerNameForIndex(i);
+            printf("Controller %d: %s\n", i, name);
+        } else {
+            const char *name = SDL_JoystickNameForIndex(i);
+            printf("Joystick  %d: %s (not a GameController)\n", i, name);
+        }
+    }
   //---------------------------------------------------------------------------
   // Font
   // Load font (adjust path and size)
